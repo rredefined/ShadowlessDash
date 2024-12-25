@@ -1,0 +1,542 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title><%= settings.name %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+</head>
+<body class="text-white bg-[171717]">
+    <div class="flex">
+        <!-- Sidebar -->
+        <%- include('../components/navigation') %>
+        <!-- Main Content -->
+        <div class="flex-1 p-6">
+            <div class="flex-1"><div class="flex flex-row flex-wrap items-center justify-center h-64 pt-12 bg-center bg-no-repeat bg-cover rounded-3xl md:rounded-none h-max xl:justify-between lg:h-52 xl:h-64 lg:pt-5 2xl:pt-0" style="border-radius: 25px; background-image: url(&quot;https://s3.xshadow.xyz/shadowsdash/assets/events/christmas/advent/2.webp&quot;);">
+                <div class="flex flex-row flex-wrap items-center justify-between w-full h-full md:bg-gradient-to-t md:from-slate-900 to-transparent xl:flex-nowrap"><div class="flex flex-col justify-center w-full mb-5 text-center text-white xl:w-max xl:pl-10 xl:text-start lg:mb-0">
+                    <h1 class="text-2xl font-bold sm:text-3xl xl:text-4xl">Welcome to <%= settings.name %>!</h1>
+                </div> 
+                <div class="flex justify-center w-full p-5 xl:pr-20 xl:w-max">
+                    <div class="decoration flex flex-row gap-2 bg-slate-900 shadow-md rounded-md items-center justify-between text-white w-[450px] pr-5 mb-10 lg:mb-0 bg-cover bg-center animate-fade" style="background-image: url(&quot;images/darkgrad1.jpg&quot;);">
+                        
+                    
+                    </div>
+                </div>
+            </div>
+        </div>     
+    </div>
+            
+            <% if (!settings.announcements) { %>
+            <div class="w-full mt-2 bg-[262626] text-white rounded-md px-4 py-2 shadow-lg border-[171717] border-2 mb-5 prose max-w-none [&amp;>*]:text-white [&amp;>*>*]:text-white [&amp;>*>*>*]:text-white">
+              <p><%= settings.announcements.message %></p>
+            </div>
+            <% } %>
+
+            <div class="grid grid-cols-1 gap-4 mt-4 md:grid-cols-4">
+                <%
+                  let ram = 0;
+                  let disk = 0;
+                  let cpu = 0;
+                  let serversUsed = pterodactyl.relationships.servers.data.length;
+              
+                  for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+                      ram += typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory === "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0;
+                      disk += typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk === "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0;
+                      cpu += typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu === "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0;
+                  }
+              
+                  const totalServers = (packages ? packages.servers : 0) + extraresources.servers;
+                  const totalRAM = (packages ? packages.ram : 0) + extraresources.ram;
+                  const totalDisk = (packages ? packages.disk : 0) + extraresources.disk;
+                  const totalCPU = (packages ? packages.cpu : 0) + extraresources.cpu;
+              
+                  const serversRemaining = totalServers - serversUsed;
+                  const availableRAM = totalRAM - ram;
+                  const availableDisk = totalDisk - disk;
+                  const availableCPU = totalCPU - cpu;
+              
+                  const getPercentage = (used, total) => Math.min((used / total) * 100, 100);
+                  const serversPercentage = getPercentage(serversUsed, totalServers);
+                  const ramPercentage = getPercentage(ram, totalRAM);
+                  const diskPercentage = getPercentage(disk, totalDisk);
+                  const cpuPercentage = getPercentage(cpu, totalCPU);
+              
+                  const getBarColor = (percentage, exceedsLimit) => {
+                    if (exceedsLimit) return "bg-red-900"; // Dark Red for exceeding total
+                    if (percentage < 50) return "bg-green-500"; // Green for less than 50%
+                    if (percentage < 75) return "bg-orange-500"; // Orange for 50%-75%
+                    return "bg-red-500"; // Red for 75%-100%
+                  };
+                %>
+              
+                <!-- Servers -->
+                <div class="p-4 shadow-2xl transition bg-[262626] rounded-2xl hover:scale-95">
+                  <div class="flex items-center mb-2">
+                    <i class="mr-2 fas fa-server"></i>
+                    <span>Available Servers</span>
+                  </div>
+                  <div class="text-2xl font-bold"><%= serversRemaining %> Slots</div>
+                  <div class="w-full h-2 mt-2 rounded-full bg-slate-700">
+                    <div 
+                      class="h-2 rounded-full <%= getBarColor(serversPercentage, serversUsed > totalServers) %>" 
+                      style="width: <%= serversPercentage %>%; transition: width 0.5s;">
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Memory -->
+                <div class="p-4 shadow-2xl transition bg-[262626] rounded-2xl hover:scale-95">
+                  <div class="flex items-center mb-2">
+                    <i class="mr-2 fas fa-memory"></i>
+                    <span>Available Memory</span>
+                  </div>
+                  <div class="text-2xl font-bold"><%= availableRAM / 1024 %> GB RAM</div>
+                  <div class="w-full h-2 mt-2 rounded-full bg-slate-700">
+                    <div 
+                      class="h-2 rounded-full <%= getBarColor(ramPercentage, ram > totalRAM) %>" 
+                      style="width: <%= ramPercentage %>%; transition: width 0.5s;">
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- CPU -->
+                <div class="p-4 shadow-2xl transition bg-[262626] rounded-2xl hover:scale-95">
+                  <div class="flex items-center mb-2">
+                    <i class="mr-2 fas fa-microchip"></i>
+                    <span>Available CPU</span>
+                  </div>
+                  <div class="text-2xl font-bold"><%= availableCPU %>% CPU</div>
+                  <div class="w-full h-2 mt-2 rounded-full bg-slate-700">
+                    <div 
+                      class="h-2 rounded-full <%= getBarColor(cpuPercentage, cpu > totalCPU) %>" 
+                      style="width: <%= cpuPercentage %>%; transition: width 0.5s;">
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Disk -->
+                <div class="p-4 shadow-2xl transition bg-[262626] rounded-2xl hover:scale-95">
+                  <div class="flex items-center mb-2">
+                    <i class="mr-2 fas fa-hdd"></i>
+                    <span>Available Disk</span>
+                  </div>
+                  <div class="text-2xl font-bold"><%= availableDisk / 1024 %> GB Disk</div>
+                  <div class="w-full h-2 mt-2 rounded-full bg-slate-700">
+                    <div 
+                      class="h-2 rounded-full <%= getBarColor(diskPercentage, disk > totalDisk) %>" 
+                      style="width: <%= diskPercentage %>%; transition: width 0.5s;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            <div class="mt-4">
+                <h2 class="mb-2 text-3xl font-bold">Your servers</h2>
+                <% if (pterodactyl.relationships.servers.data.length == 0) { %>
+                 <a href="cp/servers/new"> <div class="flex flex-col items-center w-full gap-1 mt-5 animate-fade"><img src="https://dash.wraithnodes.net/images/empty.svg" class="transition hover:scale-95 w-52" alt="Error"> <h1 class="text-lg text-white">You don't have any servers yet.</h1> <button class="px-5 py-2 mt-5 text-white transition rounded-md shadow-md decoration bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-105">Create a server</button></div></a>
+                <% } %>
+                <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
+                  <div class="flex flex-row flex-wrap w-full gap-4 animate-fade">
+                    <div class="flex flex-col shadow-md rounded-2xl decoration bg-slate-800 w-96 h-62">
+                        <div class="relative w-full h-24 bg-center bg-no-repeat bg-cover rounded-b-none rounded-2xl" 
+                             style="background-image: url('https://s3.xshadow.xyz/shadowsdash/assets/events/christmas/advent/2.webp');">
+                            <div class="relative w-full h-full p-5 bg-gradient-to-t from-slate-800 to-transparent">
+                                <div class="absolute flex gap-1 top-3 right-3">
+                                  <% if (settings.renewals.status) { %>
+                                    <div id="renew-status-btn-<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex gap-1 items-center p-1 rounded-full text-sm backdrop-blur-sm bg-white/10 border-white/20 text-white border-[1px]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"></path>
+                                        </svg>
+                                        23h 57m 58s
+                                    </div>
+                                    <script>
+                                      async function fetchRenewalStatus(serverId) {
+                                          try {
+                                              const response = await fetch(`/renewalstatus?id=${serverId}`);
+                                              const data = await response.json();
+                                              const renewButton = document.getElementById(`renew-status-btn-${serverId}`);
+                              
+                                              if (data.error) {
+                                                  renewButton.textContent = 'Error fetching status';
+                                                  renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                              } else if (data.text === 'Disabled') {
+                                                  renewButton.textContent = 'Renewals Disabled';
+                                                  renewButton.classList.add('bg-gray-600', 'hover:bg-gray-700');
+                                              } else if (data.text === 'Renewed') {
+                                                  renewButton.textContent = 'Server Renewed';
+                                                  renewButton.classList.add('bg-green-600', 'hover:bg-green-700');
+                                              } else if (data.text === 'Last chance to renew!') {
+                                                  renewButton.textContent = 'Renew Now!';
+                                                  renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                              } else if (data.text) {
+                                                  const remainingTime = data.text;
+                                                  startCountdown(renewButton, remainingTime);
+                                              }
+                                          } catch (err) {
+                                              console.error('Failed to fetch renewal status:', err);
+                                              const renewButton = document.getElementById(`renew-status-btn-${serverId}`);
+                                              renewButton.textContent = 'Failed to fetch status';
+                                              renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                          }
+                                      }
+                              
+                                      function startCountdown(renewButton, timeText) {
+                                          const timeParts = timeText.match(/(\d+) days? and (\d+(?:\.\d+)?) hours?/);
+                                          if (!timeParts) {
+                                              renewButton.textContent = 'Invalid time format';
+                                              renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                              return;
+                                          }
+                              
+                                          let days = parseInt(timeParts[1]);
+                                          let hours = parseFloat(timeParts[2]);
+                              
+                                          const updateTimer = () => {
+                                              if (days <= 0 && hours <= 0) {
+                                                  renewButton.textContent = 'Renew Now!';
+                                                  renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                                  clearInterval(interval);
+                                                  return;
+                                              }
+                              
+                                              renewButton.textContent = `Renew Server in ${days} day${days === 1 ? '' : 's'} and ${hours.toFixed(2)} hour${hours === 1 ? '' : 's'}`;
+                              
+                                              // Change button color based on remaining time
+                                              if (days > 4) {
+                                                  renewButton.classList.add('bg-green-600', 'hover:bg-green-700');
+                                              } else if (days > 2) {
+                                                  renewButton.classList.add('bg-yellow-600', 'hover:bg-yellow-700');
+                                              } else {
+                                                  renewButton.classList.add('bg-red-600', 'hover:bg-red-700');
+                                              }
+                              
+                                              // Decrease time
+                                              hours -= 0.01;
+                                              if (hours < 0) {
+                                                  days--;
+                                                  hours = 23.99;
+                                              }
+                                          };
+                              
+                                          const interval = setInterval(updateTimer, 36 * 1000); // Update every 36 seconds
+                                          updateTimer(); // Initial update
+                                      }
+                              
+                                      fetchRenewalStatus('<%= pterodactyl.relationships.servers.data[i].attributes.id %>');
+                                  </script>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 p-2 text-white">
+                            <div class="flex flex-row flex-wrap justify-between">
+                                <div class="flex flex-col mb-2">
+                                    <p class="text-xl font-bold"><%= pterodactyl.relationships.servers.data[i].attributes.name.length > 15 ? pterodactyl.relationships.servers.data[i].attributes.name.slice(0, 12) + "..." : pterodactyl.relationships.servers.data[i].attributes.name %></p>
+                                    <div class="flex flex-row items-center justify-start gap-1 text-gray-400">
+                                      <% if (!pterodactyl.relationships.servers.data[i].attributes.description) { %>
+                                        No description has been set.
+                                      <% } else { %>
+                                        <%= pterodactyl.relationships.servers.data[i].attributes.description %>
+                                      <% } %>
+                                    </div>
+                                    
+                                </div>
+                                <div class="flex flex-col items-center gap-1 text-sm"></div>
+                            </div>
+                            <div class="flex flex-row flex-wrap justify-between">
+                                <div class="grid content-between justify-between grid-cols-2">
+                                    <div class="flex flex-row items-center space-x-1 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M152,96H104a8,8,0,0,0-8,8v48a8,8,0,0,0,8,8h48a8,8,0,0,0,8-8V104A8,8,0,0,0,152,96Zm-8,48H112V112h32Z"></path>
+                                        </svg>
+                                        <p><b>CPU:</b> <%= pterodactyl.relationships.servers.data[i].attributes.limits.cpu  %> %</p>
+                                    </div>
+                                    <div class="flex flex-row items-center space-x-1 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M224,64H32A16,16,0,0,0,16,80v96a16,16,0,0,0,16,16H224a16,16,0,0,0,16-16V80A16,16,0,0,0,224,64Zm0,112H32V80H224v96Zm-24-48a12,12, 1,1-12-12A12,12,0,0,1,200,128Z"></path>
+                                        </svg>
+                                        <p><b>Memory:</b> <%= pterodactyl.relationships.servers.data[i].attributes.limits.memory  %> MB</p>
+                                    </div>
+                                    <div class="flex flex-row items-center space-x-1 text-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M208,136H48a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V152A16,16,0,0,0,208,136Zm0,64H48V152H208v48Zm0-160H48A16,16,0,0,0,32,56v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40Zm0,64H48V56H208v48ZM192,80a12,12,0,1,1-12-12A12,12,0,0,1,192,80Zm0,96a12,12,0,1,1-12-12A12,12,0,0,1,192,176Z"></path>
+                                        </svg>
+                                        <p><b>Disk:</b> <%= pterodactyl.relationships.servers.data[i].attributes.limits.disk %> MB</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="flex flex-row items-end justify-end flex-1 w-full h-full gap-1 p-1 mt-2 text-xl">
+                                    <div class="relative w-max">
+                                        <a href="/renew?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>"> <button class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                                                <path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"></path>
+                                            </svg>
+                                            Renew
+                                        </button></a>
+                                    </div>
+                                    <a href="/cp/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path>
+                                        </svg>
+                                        Edit
+                                    </a>
+                                    <a class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black" href="https://gp.wraithnodes.net/server/44bf29f8" target="_blank" rel="noreferrer">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
+                                            <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path>
+                                        </svg>
+                                        Open
+                                    </a>
+                                    <a href="/cp/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm text-red-500 transition rounded-full bg-red-500/20 hover:shadow-red-500/20 hover:shadow hover:bg-red-500 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg> Delete</a></div> </div></div></div></div>
+                <% } %>
+
+                
+        </div>
+        <%- include('../components/footer') %>
+    </div>
+
+    
+
+
+
+    <script>
+        // Add this script tag at the end of your page body
+        const snowfallScript = document.createElement('script');
+        snowfallScript.textContent = `
+        // Create and inject the CSS
+        const snowStyle = document.createElement('style');
+        snowStyle.textContent = \`
+          #snowflakeContainer {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            pointer-events: none;
+          }
+          .snowflake {
+            position: fixed;
+            background-color: #FFFFFF;
+            user-select: none;
+            z-index: 1000;
+            pointer-events: none;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            opacity: 0;
+          }
+          .snowflake.template {
+            display: none;
+          }
+          #snowToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            z-index: 1001;
+            transition: background-color 0.3s ease;
+         font-family: 'Aeonik Pro', sans-serif;
+         font-weight: 800;
+         text-transform: uppercase;
+          }
+          #snowToggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+        \`;
+        document.head.appendChild(snowStyle);
+        
+        // Create and inject the snowflake container
+        const container = document.createElement('div');
+        container.id = 'snowflakeContainer';
+        container.innerHTML = '<span class="snowflake template"></span>';
+        document.body.appendChild(container);
+        
+        // Create and inject the toggle button
+        const toggleBtn = document.createElement('button');
+        toggleBtn.id = 'snowToggle';
+        toggleBtn.textContent = 'Snow: On';
+        document.body.appendChild(toggleBtn);
+        
+        // Cookie functions
+        function setCookie(name, value, days) {
+          const expires = new Date();
+          expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+          document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/';
+        }
+        
+        function getCookie(name) {
+          const nameEQ = name + '=';
+          const ca = document.cookie.split(';');
+          for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+          }
+          return null;
+        }
+        
+        // Snowfall logic
+        let snowflakes = [];
+        let browserWidth;
+        let browserHeight;
+        let numberOfSnowflakes = 50;
+        let resetPosition = false;
+        let enableAnimations = false;
+        let reduceMotionQuery = matchMedia("(prefers-reduced-motion)");
+        let isSnowing = true; // Set to true by default
+        
+        function setAccessibilityState() {
+          enableAnimations = !reduceMotionQuery.matches;
+        }
+        setAccessibilityState();
+        reduceMotionQuery.addListener(setAccessibilityState);
+        
+        class Snowflake {
+          constructor(element, speed, xPos, yPos) {
+            this.element = element;
+            this.speed = speed;
+            this.xPos = xPos;
+            this.yPos = yPos;
+            this.scale = 1;
+            this.counter = 0;
+            this.sign = Math.random() < 0.5 ? 1 : -1;
+            this.element.style.opacity = (0.1 + Math.random()) / 3;
+          }
+        
+          update(delta) {
+            this.counter += (this.speed / 5000) * delta;
+            this.xPos += (this.sign * delta * this.speed * Math.cos(this.counter)) / 40;
+            this.yPos += Math.sin(this.counter) / 40 + (this.speed * delta) / 30;
+            this.scale = 0.5 + Math.abs((10 * Math.cos(this.counter)) / 20);
+        
+            setTransform(
+              Math.round(this.xPos),
+              Math.round(this.yPos),
+              this.scale,
+              this.element
+            );
+        
+            if (this.yPos > browserHeight) {
+              this.yPos = -50;
+            }
+          }
+        }
+        
+        function setTransform(xPos, yPos, scale, el) {
+          el.style.transform = \`translate3d(\${xPos}px, \${yPos}px, 0) scale(\${scale}, \${scale})\`;
+        }
+        
+        function getPosition(offset, size) {
+          return Math.round(-1 * offset + Math.random() * (size + 2 * offset));
+        }
+        
+        function generateSnowflakes() {
+          const originalSnowflake = document.querySelector(".snowflake.template");
+          const snowflakeContainer = originalSnowflake.parentNode;
+        
+          browserWidth = document.documentElement.clientWidth;
+          browserHeight = document.documentElement.clientHeight;
+        
+          for (let i = 0; i < numberOfSnowflakes; i++) {
+            const snowflakeClone = originalSnowflake.cloneNode(true);
+            snowflakeClone.classList.remove('template');
+            snowflakeContainer.appendChild(snowflakeClone);
+        
+            const initialXPos = getPosition(50, browserWidth);
+            const initialYPos = getPosition(50, browserHeight);
+            const speed = (5 + Math.random() * 40) * delta;
+        
+            const snowflakeObject = new Snowflake(
+              snowflakeClone,
+              speed,
+              initialXPos,
+              initialYPos
+            );
+            snowflakes.push(snowflakeObject);
+          }
+        
+          requestAnimationFrame(moveSnowflakes);
+        }
+        
+        let frames_per_second = 60;
+        let frame_interval = 1000 / frames_per_second;
+        let previousTime = performance.now();
+        let delta = 1;
+        
+        function moveSnowflakes(currentTime) {
+          delta = (currentTime - previousTime) / frame_interval;
+        
+          if (enableAnimations && isSnowing) {
+            for (let i = 0; i < snowflakes.length; i++) {
+              snowflakes[i].update(delta);
+            }
+          }
+        
+          previousTime = currentTime;
+        
+          if (resetPosition) {
+            browserWidth = document.documentElement.clientWidth;
+            browserHeight = document.documentElement.clientHeight;
+        
+            for (let i = 0; i < snowflakes.length; i++) {
+              let snowflake = snowflakes[i];
+              snowflake.xPos = getPosition(50, browserWidth);
+              snowflake.yPos = getPosition(50, browserHeight);
+            }
+        
+            resetPosition = false;
+          }
+        
+          requestAnimationFrame(moveSnowflakes);
+        }
+        
+        function setResetFlag() {
+          resetPosition = true;
+        }
+        
+        function toggleSnow() {
+          isSnowing = !isSnowing;
+          const snowflakeContainer = document.getElementById('snowflakeContainer');
+          const snowflakes = snowflakeContainer.querySelectorAll('.snowflake:not(.template)');
+          
+          if (isSnowing) {
+            snowflakes.forEach(flake => flake.style.opacity = ''); // Reset to original random opacity
+            toggleBtn.textContent = 'Snow: On';
+          } else {
+            snowflakes.forEach(flake => flake.style.opacity = '0');
+            toggleBtn.textContent = 'Snow: Off';
+          }
+          
+          setCookie('snowEnabled', isSnowing ? '1' : '0', 365);
+        }
+        
+        // Setup
+        if (enableAnimations) {
+          window.addEventListener("DOMContentLoaded", () => {
+            generateSnowflakes();
+            
+            // Check cookie and set initial state
+            const snowEnabled = getCookie('snowEnabled');
+            if (snowEnabled === '0') {
+              isSnowing = false;
+              const snowflakes = document.querySelectorAll('.snowflake:not(.template)');
+              snowflakes.forEach(flake => flake.style.opacity = '0');
+              toggleBtn.textContent = 'Snow: Off';
+            }
+          }, false);
+          
+          window.addEventListener("resize", setResetFlag, false);
+          toggleBtn.addEventListener("click", toggleSnow, false);
+        }
+        `;
+        
+        document.body.appendChild(snowfallScript);
+        </script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-full bg-stone-950" style="font-family: 'Inter', sans-serif;">
+  <%
+    let ram = 0;
+    let disk = 0;
+    let cpu = 0;
+    let servers = pterodactyl.relationships.servers.data.length;
+    for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+      ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+      disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+      cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+  }
+  %>
+  <%- include('../components/navigation') %>
+  <div class="md:pl-64">
+    <main class="min-h-screen">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="px-4 py-8 sm:px-0">
+          <!-- Transfer Header -->
+          <div class="sm:flex sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-2xl font-bold leading-7 text-stone-200 sm:truncate sm:text-3xl sm:tracking-tight">Transfer Coins</h2>
+              <p class="mt-1 text-sm leading-6 text-stone-400">Send coins to other users on the platform.</p>
+            </div>
+            <div class="mt-4 sm:ml-4 sm:mt-0">
+              <span class="inline-flex items-center rounded-md bg-stone-800 px-3 py-2 text-sm font-semibold text-stone-200">
+                Balance: <%= coins %> coins
+              </span>
+            </div>
+          </div>
+
+          <!-- Transfer Form -->
+          <div class="mt-8">
+            <div class="rounded-lg bg-stone-900 p-6 shadow-sm ring-1 ring-stone-800">
+              <form action="/transfer" method="POST">
+                <div class="space-y-6">
+                  <div>
+                    <label for="recipient" class="block text-sm font-medium leading-6 text-stone-300">Recipient's Discord ID</label>
+                    <div class="mt-2">
+                      <input type="text" name="recipient" id="recipient" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6" placeholder="Enter Discord ID">
+                    </div>
+                  </div>
+
+                  <div>
+                    <label for="amount" class="block text-sm font-medium leading-6 text-stone-300">Amount</label>
+                    <div class="mt-2">
+                      <input type="number" name="amount" id="amount" min="1" max="<%= coins %>" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6" placeholder="Enter amount">
+                    </div>
+                  </div>
+
+                  <div>
+                    <button type="submit" class="flex w-full justify-center rounded-md bg-stone-800 px-3 py-2 text-sm font-semibold text-stone-200 shadow-sm hover:bg-stone-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-600">
+                      Transfer Coins
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Error Messages -->
+          <% if (req.query.err) { %>
+            <div class="mt-8 rounded-lg bg-red-500/10 p-4">
+              <div class="flex">
+                <div class="flex-shrink-0">
+                  <svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+                <div class="ml-3">
+                  <h3 class="text-sm font-medium text-red-400">Error</h3>
+                  <div class="mt-2 text-sm text-red-300">
+                    <p>Error code: <%= req.query.err %></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>

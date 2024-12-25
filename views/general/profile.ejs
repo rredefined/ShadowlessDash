@@ -1,0 +1,52 @@
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-full bg-stone-950" style="font-family: 'Inter', sans-serif;">
+  <%- include('../components/navigation') %>
+  <div class="md:pl-64">
+    <main class="min-h-screen">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="px-4 py-8 sm:px-0">
+          <div class="rounded-lg bg-stone-900 p-6 shadow">
+            <div class="px-4 sm:px-0">
+              <h3 class="text-base font-semibold leading-7 text-stone-200">Profile Information</h3>
+              <p class="mt-1 text-sm leading-6 text-stone-400">Update your account settings and profile information.</p>
+            </div>
+            <div class="mt-6 border-t border-stone-800">
+              <dl class="divide-y divide-stone-800">
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt class="text-sm font-medium leading-6 text-stone-300">Username</dt>
+                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.username %></dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt class="text-sm font-medium leading-6 text-stone-300">Email address</dt>
+                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.email %></dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt class="text-sm font-medium leading-6 text-stone-300">Role</dt>
+                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.role %></dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                  <dt class="text-sm font-medium leading-6 text-stone-300">Last login</dt>
+                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.last_login %></dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+
+</div>
+</body>

@@ -1,0 +1,29 @@
+{
+  "name": "heliactyl",
+  "version": "24.0.0",
+  "description": "The official Heliactyl client area for the Pterodactyl Panel.",
+  "main": "app.js",
+  "dependencies": {
+    "@keyv/sqlite": "^3.5.2",
+    "@tailwindcss/forms": "^0.5.7",
+    "axios": "^0.28.0",
+    "bcrypt": "^5.1.1",
+    "chalk": "^4.1.0",
+    "cron": "^1.8.2",
+    "discord.js": "^12.5.3",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.17.2",
+    "express-ws": "^4.0.0",
+    "javascript-obfuscator": "^4.0.2",
+    "keyv": "^4.0.4",
+    "node-cache": "^5.1.2",
+    "uuid": "^9.0.1",
+    "valid-url": "^1.0.9",
+    "warn": "^1.0.1"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "build": "npx tailwindcss -i ./assets/tw.conf -o ./assets/tailwind.css --prod"
+  }
+}

@@ -1,0 +1,313 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link 
+    rel="preload" 
+    href="/assets/Ndot-55.otf" 
+    as="font" 
+    type="font/otf" 
+    crossorigin="anonymous"
+>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .text-3xl {
+            color: white;
+        }
+
+        .text-2xl {
+            color: white;
+        }
+
+        .text-xl {
+            color: white;
+        }
+
+        .text-lg {
+            color: white;
+        }
+
+        h3 {
+            color: white;
+        }
+
+        h2 {
+            color: white
+        }
+
+        h3 {
+            color: white
+        }
+
+        /* Loading bar animation */
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* Spinner animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            animation: loading 0.5s ease-in-out;
+            z-index: 1000;
+        }
+
+        .spinner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            animation: spin 1s linear infinite;
+            z-index: 1000;
+        }
+
+        /* Sidebar transition for mobile */
+        .sidebar-transition {
+            transition: transform 0.3s ease-in-out;
+        }
+
+.font-mono {
+font-family: 'JetBrains Mono' !important;
+}
+    </style>
+<style>
+@font-face {
+    font-family: 'Ndot-55';
+    src: url('/assets/Ndot-55.otf') format('opentype');
+    font-weight: normal;
+    font-display: swap;
+    font-style: normal;
+    unicode-range: U+000-5FF; /* Latin glyphs */
+    font-synthesis: none;
+}
+
+.heavy {
+    font-family: 'Ndot-55', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+#server-name {
+    font-family: 'Ndot-55', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.extra-bold {
+    font-family: 'Ndot-55', sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+</style>
+    <!-- SEO - Meta Tags -->
+    <meta name="description"
+        content="Experience seamless deployment with Fractal's powerful dashboard. Free serverless hosting for web projects, game servers, and containerized applications with automated scaling, monitoring, and zero maintenance.">
+
+    <meta name="keywords"
+        content="container management, serverless hosting, cloud platform, container orchestration, Fractal dashboard, free hosting, game server hosting, Docker containers, cloud deployment, DevOps platform, container scaling, microservices management, cloud infrastructure, container monitoring, Fractal cloud">
+
+    <meta name="author" content="SRYDEN, Inc.">
+
+    <!-- Additional recommended meta tags -->
+    <meta property="og:title" content="Fractal">
+    <meta property="og:description"
+        content="We're Fractal, a free hosting platform for your projects, game servers, and more. Built for cloud-native and serverless projects by design.">
+    <meta property="og:type" content="website">
+
+    <!-- Recommended additional tag for mobile optimization -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body class="bg-[#c6c6d1] text-gray-300" style="font-family: 'Inter'">
+    
+    
+    <!-- Loading bar -->
+    <div class="loading-bar"></div>
+    <!-- Spinner -->
+    <div class="spinner">
+        <svg class="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+</div>
+
+    
+<%
+     let ram = 0;
+     let disk = 0;
+     let cpu = 0;
+     let servers = pterodactyl.relationships.servers.data.length;
+     for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) {
+         ram = ram + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.memory == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.memory : 0);
+         disk = disk + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.disk == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.disk : 0);
+         cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
+     }
+     %>
+<!-- Navigation -->
+<%- include('../components/navigation') %>
+
+
+<div class="md:pl-64">
+    <main class="min-h-screen">
+      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+        <div class="px-4 py-8 sm:px-0">
+          <% if ((packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 > 0) { %>
+          <form action="/create" method="POST" class="mt-8 space-y-8 divide-y divide-stone-800">
+            <div class="space-y-8 divide-y divide-stone-800">
+              <!-- Basic Information -->
+              <div class="pt-8 space-y-6">
+                <div>
+                  <h3 class="text-lg font-medium leading-6 text-stone-200">Basic Information</h3>
+                  <p class="mt-1 text-sm text-stone-400">Configure the basic settings for your server.</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                  <div class="sm:col-span-4">
+                    <label for="name" class="block text-sm font-medium text-stone-200">Server Name</label>
+                    <div class="mt-1">
+                      <input type="text" name="name" id="name" required
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6"
+                        placeholder="My Game Server">
+                    </div>
+                  </div>
+
+                  <div class="sm:col-span-4">
+                    <label for="location" class="block text-sm font-medium text-stone-200">Location</label>
+                    <div class="mt-1">
+                      <select name="location" id="location" required
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        <% for (let [name, value] of Object.entries(settings.api.client.locations)) { %>
+                          <option value="<%= name %>"><%= value.name %></option>
+                        <% } %>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="sm:col-span-4">
+                    <label for="egg" class="block text-sm font-medium text-stone-200">Server Type</label>
+                    <div class="mt-1">
+                      <select name="egg" id="egg" required
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        <% for (let [name, value] of Object.entries(settings.api.client.eggs)) { %>
+                          <option value="<%= name %>"><%= value.display %></option>
+                        <% } %>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Resources -->
+              <div class="pt-8 space-y-6">
+                <div>
+                  <h3 class="text-lg font-medium leading-6 text-stone-200">Server Resources</h3>
+                  <p class="mt-1 text-sm text-stone-400">Configure the resources allocated to your server.</p>
+                </div>
+
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                  <div class="sm:col-span-2">
+                    <label for="memory" class="block text-sm font-medium text-stone-200">Memory (MB)</label>
+                    <div class="mt-1">
+                      <input type="number" name="memory" id="memory" required min="1"
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6"
+                        value="<%= (packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 %>">
+                    </div>
+                  </div>
+
+                  <div class="sm:col-span-2">
+                    <label for="disk" class="block text-sm font-medium text-stone-200">Disk Space (MB)</label>
+                    <div class="mt-1">
+                      <input type="number" name="disk" id="disk" required min="1"
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6"
+                        value="<%= (packages ? packages.disk : 0)/1024 + extraresources.disk/1024 - disk/1024 %>">
+                    </div>
+                  </div>
+
+                  <div class="sm:col-span-2">
+                    <label for="cpu" class="block text-sm font-medium text-stone-200">CPU Limit (%)</label>
+                    <div class="mt-1">
+                      <input type="number" name="cpu" id="cpu" required min="1" max="100"
+                        class="block w-full rounded-md border-0 bg-stone-900 py-1.5 text-stone-200 shadow-sm ring-1 ring-inset ring-stone-800 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6"
+                        value="<%= (packages ? packages.cpu : 0)/100 + extraresources.cpu/100 - cpu/100 %>">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error Messages -->
+            <% if (req.query.err) { %>
+              <div class="p-4 mt-6 rounded-md bg-red-500/10">
+                <div class="flex">
+                  <div class="flex-shrink-0">
+                    <svg class="w-5 h-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    <h3 class="text-sm font-medium text-red-400">Error</h3>
+                    <div class="mt-2 text-sm text-red-300">
+                      <p>Error code: <%= req.query.err %></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+
+            <!-- Submit Button -->
+            <div class="pt-5">
+              <div class="flex justify-end">
+                <a href="/dashboard" class="px-3 py-2 text-sm font-semibold rounded-md shadow-sm bg-stone-900 text-stone-200 hover:bg-stone-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-600">
+                  Cancel
+                </a>
+                <button type="submit"
+                  class="inline-flex justify-center px-3 py-2 ml-3 text-sm font-semibold rounded-md shadow-sm bg-stone-800 text-stone-200 hover:bg-stone-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-600">
+                  Create Server
+                </button>
+              </div>
+            </div>
+          </form>
+          <% } else { %>
+          <div class="text-center md:mt-[30vh]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto text-amber-500">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+            </svg>
+            <h3 class="mt-4 font-semibold tracking-tight text-gray-900 text-md">Insufficient resources</h3>
+            <p class="mt-1 text-xs text-gray-500">You need at least 1 GiB memory in order to deploy a server.</p>
+            <div class="mt-6">
+              <a href="../servers" type="button" class="transition inline-flex items-center rounded-full bg-white px-6 py-1.5 text-xs font-light text-gray-700 hover:text-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-4 w-4 text-gray-800">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+                Back
+              </a>
+            </div>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </main>
+    <%- include('../components/footer') %>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.js" integrity="sha512-eOUPKZXJTfgptSYQqVilRmxUNYm0XVHwcRHD4mdtCLWf/fC9XWe98IT8H1xzBkLL4Mo9GL0xWMSJtgS5te9rQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

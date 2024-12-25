@@ -1,0 +1,96 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html class="h-full bg-bluey-800">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <head>
+    <%- include('./components/head') %>
+  </head>
+  <body class="bg-slate-900">
+    <div id="app">
+      <!-- Snowflakes -->
+      <div class="absolute top-0 z-[999]">
+        <!-- Snowflake 1 -->
+        <div class="snowflake svelte-1iuhzpo" style="left: 186.723px; top: 648.672px; width: 4.41138px; height: 4.41138px; opacity: 0.784578;"></div>
+        <!-- Snowflake 2 -->
+        <div class="snowflake svelte-1iuhzpo" style="left: 340.828px; top: 22.4948px; width: 1.88187px; height: 1.88187px; opacity: 0.97436;"></div>
+        <!-- ... -->
+      </div>
+
+      <!-- Main Content -->
+      <section style="font-family: Inter, sans-serif;">
+        <!-- Toaster -->
+        <div class="toaster svelte-jyff3d" role="alert"></div>
+
+        <!-- Navigation -->
+        <div aria-hidden="true" data-svnav-router="0" style="display: none;"></div>
+        <div aria-hidden="true" data-svnav-route-start="0" style="display: none;"></div>
+        <div aria-hidden="true" data-svnav-route-end="0" style="display: none;"></div>
+
+        <!-- Login Form -->
+        <div class="flex flex-col justify-between w-screen h-screen gap-5 p-5 bg-center bg-no-repeat bg-cover">
+          <div class="flex flex-row flex-wrap items-center justify-center gap-3 text-white md:justify-start">
+            <img src="https://gp.wraithnodes.net/assets/logo.png" class="rounded-md w-14 h-14" alt="Logo">
+            <p class="text-2xl font-bold"><%= settings.name %></p>
+          </div>
+
+          <div class="flex flex-row flex-wrap items-center justify-center h-full md:gap-10 lg:gap-72">
+            <div class="flex flex-col w-full gap-1 p-3 text-white border-2 bg-zinc-800/70 backdrop-blur-md rounded-3xl border-zinc-500/30 sm:w-96">
+              <h1 class="text-2xl font-bold">👋 Welcome!</h1>
+              <p class="mb-5 text-sm">Please login or register to continue.</p>
+
+              <form class="flex flex-col gap-1">
+                <p class="pl-1 text-xs font-bold uppercase">E-mail address</p>
+                <input type="email" class="w-full p-2 transition border-2 bg-zinc-900/50 rounded-xl border-black/0 focus:border-2 focus:border-blue-500">
+                <p class="pl-1 mt-3 text-xs font-bold uppercase">Password</p>
+                <input type="password" class="w-full p-2 transition border-2 bg-zinc-900/50 rounded-xl border-black/0 focus:border-2 focus:border-blue-500">
+                <button class="flex items-center justify-center w-full p-2 mt-3 text-sm transition bg-blue-600 hover:scale-95 rounded-2xl hover:bg-blue-500" type="submit">Login</button>
+              </form>
+
+              <div class="flex flex-row mt-2 text-sm">
+                <p class="mr-1">Don't have an account yet?</p>
+                <button class="text-blue-400 hover:underline">Register</button>
+              </div>
+
+              <div class="flex flex-row mt-1 text-sm">
+                <p class="mr-1">Forgot your password?</p>
+                <a href="/auth/forgot-password" class="text-blue-400 hover:underline">Reset password</a>
+              </div>
+
+              <div class="flex flex-row items-center gap-1 mt-2">
+                <div class="h-[1px] w-full bg-gray-700"></div>
+                <p class="text-gray-300">OR</p>
+                <div class="h-[1px] w-full bg-gray-700"></div>
+              </div>
+
+              <div class="mt-2">
+                <a class="flex items-center justify-center w-full p-2 text-sm text-white transition bg-blue-600 hover:scale-95 decoration hover:bg-blue-500 rounded-2xl" href="/login">
+                  <svg class="inline-flex w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8zM222.5 337.6c-29 0-52.8-26.6-52.8-59.2S193.1 219.1 222.5 219.1c29.7 0 53.3 26.8 52.8 59.2C275.3 311 251.9 337.6 222.5 337.6zm195.4 0c-29 0-52.8-26.6-52.8-59.2S388.4 219.1 417.9 219.1c29.7 0 53.3 26.8 52.8 59.2C470.7 311 447.5 337.6 417.9 337.6z"/></svg>
+                    <p class="ml-2 text-white">Login with Discord</p>
+                </a>
+            </div>
+            </div>
+
+            <div class="ml-[15%] lg:block lg:w-[20%]">
+              <img src="../assets/island.png" loading="lazy" class="max-h-[500px] floating" alt="Floating Island">
+            </div>
+          </div>
+
+          <%- include('./components/footer') %>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="veepn-breach-alert"></div>
+    <style>
+      @font-face {
+        font-family: FigtreeVF;
+        src: url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),
+             url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");
+        font-weight: 100 1000;
+        font-display: swap;
+      }
+    </style>
+  </body>
+</html>

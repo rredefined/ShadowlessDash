@@ -1,0 +1,130 @@
+<div id="searchModal" class="fixed inset-0 z-10 modal-hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="fixed inset-0 bg-stone-950/30 transition-opacity"></div>
+  <div class="fixed inset-0 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
+        <div class="pointer-events-auto w-screen max-w-md">
+          <div class="flex h-full flex-col bg-stone-900 shadow-xl">
+            <div class="flex-1 px-4 py-6 sm:px-6">
+              <div class="flex items-start justify-between">
+                <h2 class="text-base font-semibold leading-6 text-stone-200" id="slide-over-title">Search</h2>
+                <div class="ml-3 flex h-7 items-center">
+                  <button type="button" class="relative rounded-md bg-stone-900 text-stone-400 hover:text-stone-300" onclick="toggleSearchModal()">
+                    <span class="sr-only">Close panel</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="relative">
+                  <input type="text" id="searchInput" class="block w-full rounded-md border-0 py-1.5 pl-4 pr-14 text-stone-200 bg-stone-800 ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6" placeholder="Search...">
+                  <div class="absolute inset-y-0 right-0 flex py-1.5 pr-3">
+                    <kbd class="inline-flex items-center rounded border border-stone-700 px-1 font-sans text-xs text-stone-400">⌘K</kbd>
+                  </div>
+                </div>
+                <div class="mt-4">
+                  <div id="searchResults" class="divide-y divide-stone-800">
+                    <!-- Results will be populated here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-hidden {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .modal-visible {
+    display: block;
+    opacity: 1;
+  }
+</style>
+
+<script>
+// References to elements
+const searchModal = document.getElementById("searchModal");
+const searchInput = document.getElementById("searchInput");
+const searchResults = document.getElementById("searchResults");
+const navLinks = document.querySelectorAll(".nav-link");
+
+// Toggle search modal visibility
+function toggleSearchModal() {
+  if (searchModal.classList.contains("modal-visible")) {
+    searchModal.classList.remove("modal-visible");
+    searchModal.classList.add("modal-hidden");
+    searchInput.value = "";
+    searchResults.innerHTML = "";
+  } else {
+    searchModal.classList.remove("modal-hidden");
+    searchModal.classList.add("modal-visible");
+    searchInput.focus();
+  }
+}
+
+// Open modal on Command/Ctrl + K
+document.addEventListener("keydown", (event) => {
+  if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+    event.preventDefault();
+    toggleSearchModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && searchModal.classList.contains("modal-visible")) {
+    toggleSearchModal();
+  }
+});
+
+// Close modal on outside click
+window.addEventListener("click", (event) => {
+  if (event.target === searchModal) {
+    toggleSearchModal();
+  }
+});
+
+// Filter navigation links
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filteredLinks = Array.from(navLinks).filter((link) =>
+    link.textContent.toLowerCase().includes(searchTerm)
+  );
+  searchResults.innerHTML = "";
+
+  if (filteredLinks.length === 0) {
+    searchResults.innerHTML = `<p class="text-stone-400 text-sm mt-4">No results found.</p>`;
+  } else {
+    filteredLinks.forEach((link, index) => {
+      const resultLink = document.createElement("a");
+      resultLink.href = link.href;
+      resultLink.textContent = link.textContent;
+      resultLink.className = `
+        nav-link transition text-stone-400 hover:bg-stone-800
+        hover:text-stone-100 group flex items-center px-4
+        py-2 text-sm font-medium rounded-xl
+      `;
+      if (index === 0) resultLink.classList.add("bg-stone-900", "text-stone-100", "font-semibold");
+      searchResults.appendChild(resultLink);
+    });
+  }
+});
+
+// Handle Enter key for selected results
+searchInput.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    const activeLink = searchResults.querySelector("a");
+    if (activeLink) activeLink.click();
+  }
+});
+</script>

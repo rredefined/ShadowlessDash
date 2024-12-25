@@ -1,0 +1,82 @@
+<head>
+  <title><%= settings.name %></title>
+  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../assets/tailwind.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="min-h-full bg-stone-950" style="font-family: 'Inter', sans-serif;">
+  <div>
+    <%- include('../components/navigation') %>
+    <div class="md:pl-64">
+      <main class="min-h-screen">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div class="px-4 py-8 sm:px-0">
+            <div class="rounded-lg bg-stone-900 p-6 shadow">
+              <div class="px-4 sm:px-0">
+                <h3 class="text-base font-semibold leading-7 text-stone-200">Admin Settings</h3>
+                <p class="mt-1 text-sm leading-6 text-stone-400">Configure system-wide settings and preferences.</p>
+              </div>
+              <div class="mt-6 border-t border-stone-800">
+                <form action="/admin/settings" method="POST">
+                  <!-- General Settings -->
+                  <div class="px-4 py-6 sm:px-0">
+                    <h4 class="text-lg font-medium text-stone-200 mb-4">General Settings</h4>
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                      <div class="sm:col-span-4">
+                        <label for="siteName" class="block text-sm font-medium leading-6 text-stone-300">Site Name</label>
+                        <div class="mt-2">
+                          <input type="text" name="siteName" id="siteName" value="<%= settings.siteName %>" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-4">
+                        <label for="domain" class="block text-sm font-medium leading-6 text-stone-300">Domain</label>
+                        <div class="mt-2">
+                          <input type="text" name="domain" id="domain" value="<%= settings.domain %>" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- API Settings -->
+                  <div class="px-4 py-6 sm:px-0 border-t border-stone-800">
+                    <h4 class="text-lg font-medium text-stone-200 mb-4">API Configuration</h4>
+                    <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                      <div class="sm:col-span-4">
+                        <label for="apiKey" class="block text-sm font-medium leading-6 text-stone-300">API Key</label>
+                        <div class="mt-2">
+                          <input type="password" name="apiKey" id="apiKey" value="<%= settings.apiKey %>" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+
+                      <div class="sm:col-span-4">
+                        <label for="apiUrl" class="block text-sm font-medium leading-6 text-stone-300">API URL</label>
+                        <div class="mt-2">
+                          <input type="text" name="apiUrl" id="apiUrl" value="<%= settings.apiUrl %>" class="block w-full rounded-md border-0 py-1.5 text-stone-200 bg-stone-800 shadow-sm ring-1 ring-inset ring-stone-700 placeholder:text-stone-400 focus:ring-2 focus:ring-inset focus:ring-stone-600 sm:text-sm sm:leading-6">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Save Button -->
+                  <div class="px-4 py-6 sm:px-0 flex justify-end">
+                    <button type="submit" class="rounded-md bg-stone-800 px-3 py-2 text-sm font-semibold text-stone-200 shadow-sm hover:bg-stone-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-stone-600">
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <%- include('../components/footer') %>
+    </div>
+    
+  </div>
+</body>

@@ -1,0 +1,72 @@
+<div class="container flex-col items-center justify-center px-4 mx-auto mt-6 text-center text-white">
+  <div class="flex flex-col gap-1 mb-2">
+    <div class="flex flex-row flex-wrap items-center justify-center w-full gap-1 text-sm text-white/50">
+      <p class="text-center">© Clyra 2024 - 2025 all rights reserved.</p>
+    </div>
+    <p class="text-xs text-center text-white/50">Made with <span class="animate-pulse">💖</span> by <a href="https://github.com/XaloraLabs/XyonDash" class="hover:text-white">XaloraTeam</a></p>
+    <div class="flex flex-row flex-wrap items-center justify-center w-full gap-1 text-sm text-center text-white/50">
+      <a title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca_protected_sml_120n.png?ID=c93b16e4-0a6e-461d-ad39-9f2041812935"  alt="DMCA.com Protection Status" /></a>
+    </div>
+    <div class="flex flex-row flex-wrap items-center justify-center w-full gap-1 text-xs text-center opacity-50 text-white/50" style="font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <path d="M232,64a32,32,0,1,0-40,31v17a8,8,0,0,1-8,8H96a23.84,23.84,0,0,0-8,1.38V95a32,32,0,1,0-16,0v66a32,32,0,1,0,16,0V144a8,8,0,0,1,8-8h88a24,24,0,0,0,24-24V95A32.06,32.06,0,0,0,232,64ZM64,64A16,16,0,1,1,80,80,16,16,0,0,1,64,64ZM96,192a16,16,0,1,1-16-16A16,16,0,0,1,96,192ZM200,80a16,16,0,1,1,16-16A16,16,0,0,1,200,80Z"></path>
+      </svg>
+      <ul id="branches-list"></ul>
+      <div class="mr-2 text-center opacity-50"></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
+        <rect width="256" height="256" fill="none"></rect>
+        <path d="M128,24h0A104,104,0,1,0,232,128,104.12,104.12,0,0,0,128,24Zm88,104a87.61,87.61,0,0,1-3.33,24H174.16a157.44,157.44,0,0,0,0-48h38.51A87.61,87.61,0,0,1,216,128ZM102,168H154a115.11,115.11,0,0,1-26,45A115.27,115.27,0,0,1,102,168Zm-3.9-16a140.84,140.84,0,0,1,0-48h59.88a140.84,140.84,0,0,1,0,48ZM40,128a87.61,87.61,0,0,1,3.33-24H81.84a157.44,157.44,0,0,0,0,48H43.33A87.61,87.61,0,0,1,40,128ZM154,88H102a115.11,115.11,0,0,1,26-45A115.27,115.27,0,0 ```html
+      ,1,1,154,88Zm52.33,0H170.71a135.28,135.28,0,0,0-22.3-45.6A88.29,88.29,0,0,1,206.37,88ZM107.59,42.4A135.28,135.28,0,0,0,85.29,88H49.63A88.29,88.29,0,0,1,107.59,42.4ZM49.63,168H85.29a135.28,135.28,0,0,0,22.3,45.6A88.29,88.29,0,0,1,49.63,168Zm98.78,45.6a135.28,135.28,0,0,0,22.3-45.6h35.66A88.29,88.29,0,0,1,148.41,213.6Z"></path>
+      </svg>
+      <p id="latest-release"></p>
+      <div class="mr-2 text-center opacity-50"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const repoOwner = 'XaloraLabs';  // Replace with the GitHub repo owner
+  const repoName = 'XaloraClient';  // Replace with the repo name
+
+  // Fetch repository info
+  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}`)
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById('repo-info').innerHTML = `
+              <strong>Name:</strong> ${data.id}<br>
+              <strong>Description:</strong> ${data.description}<br>
+              <strong>Forks:</strong> ${data.forks_count}<br>
+              <strong>Stars:</strong> ${data.stargazers_count}<br>
+              <strong>Language:</strong> ${data.language}<br>
+              <strong>Created At:</strong> ${new Date(data.created_at).toLocaleDateString()}
+          `;
+      })
+      .catch(error => console.error('Error fetching repo info:', error));
+
+  // Fetch branches
+  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/branches`)
+      .then(response => response.json())
+      .then(data => {
+          const branchesList = document.getElementById('branches-list');
+          if (data.length > 0) {
+              const latestBranch = data[data.length - 1]; // Get the latest branch
+              const listItem = document.createElement('li');
+              listItem.textContent = latestBranch.name;
+              branchesList.appendChild(listItem);
+          }
+      })
+      .catch(error => console.error('Error fetching branches:', error));
+
+  // Fetch releases
+  fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/releases`)
+      .then(response => response.json())
+      .then(data => {
+          const releasesList = document.getElementById('latest-release');
+          if (data.length > 0) {
+              const latestRelease = data[0]; // Get the latest release
+              releasesList.textContent = `${latestRelease.name} (v${latestRelease.tag_name})`;
+          }
+      })
+      .catch(error => console.error('Error fetching releases:', error));
+</script>
