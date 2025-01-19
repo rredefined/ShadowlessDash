@@ -1,8 +1,9 @@
 {
   "name": "Xalora",
+  "logo": "https://avatars.githubusercontent.com/u/188295803?s=400&v=4",
   "pterodactyl": {
-    "domain": "https://",
-    "key": ""
+    "domain": "https://control.your.host",
+    "key": "ptla_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
   },
 
   "announcements": {
@@ -11,11 +12,16 @@
 
   },
   "timezone": "GMT",
-  "version": "24.0.0",
+  "version": "1.0.0",
   "testing": false,
   "website": {
     "port": 3001,
     "secret": "Default Secret (Change this to any string you want)"
+  },
+  "linkvertise": {
+    "userid": "50000",
+    "dailyLimit": 1,
+    "coins": 10
   },
   "database": "sqlite://database.sqlite",
   "api": {
@@ -24,26 +30,15 @@
         "resend": ""
       },
     "client": {
-      "accountSwitcher": true,
+      "accountSwitcher": false,
       "api": {
         "enabled": true,
         "code": "Default API Key (Change this to any string you want)"
       },
       "j4r": {
-        "enabled": true,
+        "enabled": false,
         "ads": [
-          {
-            "name": "Sryden OSS",
-            "invite": "https://discord.gg/JAv7ThsHFt",
-            "id": "1253782902618194011",
-            "coins": 200
-          },
-          {
-            "name": "HolaClient",
-            "invite": "https://discord.gg/holaclient",
-            "id": "1038719273658499072",
-            "coins": 200
-          }
+          
         ]
       },
       "bot": {
@@ -79,8 +74,8 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set up OAuth2. This is required for Heliactyl to work. You must also set the redirect URL to the link below.",
-        "id": "1269961894001774655",
-        "secret": "Hlo6-h-hAjTjB3My3e0WYv2kPRcfQEQC",
+        "id": "",
+        "secret": "",
         "link": "http://localhost:3001",
         "callbackpath": "/callback",
         "prompt": true,
@@ -107,10 +102,10 @@
         "default": "default",
         "list": {
           "default": {
-            "ram": 1024,
-            "disk": 1024,
+            "ram": 2048,
+            "disk": 5120,
             "cpu": 100,
-            "servers": 2
+            "servers": 1
           }
         },
         "rolePackages": {
@@ -123,17 +118,31 @@
       },
       "locations": {
         "1": {
-          "package": null,
-          "name": "Location 1"
+          "name": "Frankfurt",
+          "country": "Germany",
+          "region": "Europe",
+          "capacity": 100,
+          "node": "DE-1",
+          "iso": "DE",
+          "id": 1,
+          "package": "default"
         },
         "2": {
-          "package": null,
-          "name": "Location 2"
+          "name": "SGP",
+          "country": "Singapore",
+          "region": "Asia",
+          "capacity": 120,
+          "node": "SGP-1",
+          "id": 2,
+          "iso": "SG",
+          "package": null
         }
       },
       "eggs": {
         "paper": {
-          "display": "Paper",
+          "category": "Minecraft Java",
+          "display": "Paper/Spigot",
+          "icon": "https://papermc.io/assets/logo/256x.png",
           "minimum": {
             "ram": 1024,
             "disk": 1024,
@@ -145,9 +154,9 @@
             "cpu": null
           },
           "info": {
-            "egg": 5,
+            "egg": 2,
             "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
-            "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
+            "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}",
             "environment": {
               "SERVER_JARFILE": "server.jar",
               "BUILD_NUMBER": "latest"
@@ -159,7 +168,9 @@
           }
         },
         "bungeecord": {
-          "display": "BungeeCord",
+          "category": "Minecraft Java",
+          "display": " BungeeCord",
+          "icon": "https://scalacube.com/images/store/minecraft/bungeecord.png",
           "minimum": {
             "ram": 512,
             "disk": 512,
@@ -171,7 +182,7 @@
             "cpu": null
           },
           "info": {
-            "egg": 3,
+            "egg": 1,
             "docker_image": "ghcr.io/pterodactyl/yolks:java_17",
             "startup": "java -Xms128M -Xmx{{SERVER_MEMORY}}M -jar {{SERVER_JARFILE}}",
             "environment": {
@@ -204,7 +215,7 @@
           },
           "servers": {
             "cost": 100,
-            "per": 2
+            "per": 1
           }
         }
       }
@@ -225,8 +236,18 @@
       "IP address"
     ]
   },
-  "renewals":{
-    "status": false
+  "servercreation": {
+    "note": "You can set how much it should cost to create a server here, the default price is free",
+    "cost": 0
+  },
+  "renewals": {
+    "_comment": "delay is in days (server deletion delay), renew is in hours (H ow long will be server renewed for)",
+    "status": true,
+    "cost": 10, 
+    "renew": 24,   
+    "delay": 1,
+    "bypassCost": 50,
+    "logs": true
 
   },
   "whitelist": {
