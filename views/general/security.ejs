@@ -1,59 +1,57 @@
+
 <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
-
-<body class="min-h-full bg-stone-950" style="font-family: 'Inter', sans-serif;">
-  <%- include('../components/navigation') %>
-  <div class="md:pl-64">
-    <main class="min-h-screen">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="px-4 py-8 sm:px-0">
-          <div class="rounded-lg bg-stone-900 p-6 shadow">
-            <div class="px-4 sm:px-0">
-              <h3 class="text-base font-semibold leading-7 text-stone-200">Security Settings</h3>
-              <p class="mt-1 text-sm leading-6 text-stone-400">Manage your account security and authentication settings.</p>
-            </div>
-            <div class="mt-6 border-t border-stone-800">
-              <dl class="divide-y divide-stone-800">
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Username</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><span class="bg-stone-800 text-stone-200 px-4 py-2 rounded-full"><%= pterodactyl.username %></span></dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Email</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><span class="bg-stone-800 text-stone-200 px-4 py-2 rounded-full"><%= pterodactyl.email %></span></dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Password</dt>
-                  <dd class="mt-1 flex text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0">
-                    <% if (req.session.password) { %>
-                    <span class="flex-grow"><%= req.session.password %></span>
-                    <% } else { %>
-                    <span class="flex-grow">••••••••</span>
-                    <% } %>
-                    <span class="ml-4 flex-shrink-0">
+<body class="text-white bg-[171717]">
+  <div class="flex">
+      <!-- Sidebar -->
+      <%- include('../components/navigation') %>
+      <!-- Main Content -->
+      <main class="container flex-grow px-4 py-8 mx-auto">
+        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
+          <div class="px-4 py-8 sm:px-0">
+            <div class="p-6 rounded-3xl shadow bg-[262626]">
+              <div class="px-4 sm:px-0">
+                <h3 class="text-base font-semibold leading-7 text-stone-200">Security Settings</h3>
+                <p class="mt-1 text-sm leading-6 text-stone-400">Manage your account security and authentication settings.</p>
+              </div>
+              <div class="mt-6 border-t border-gray-200">
+                <dl class="divide-y divide-gray-300">
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-stone-300">Username</dt>
+                    <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><span class="px-4 py-2 rounded-full bg-stone-800 text-stone-200"><%= pterodactyl.username %></span></dd>
+                  </div>
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-stone-300">Email</dt>
+                    <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><span class="px-4 py-2 rounded-full bg-stone-800 text-stone-200"><%= pterodactyl.email %></span></dd>
+                  </div>
+                  <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium leading-6 text-stone-300">Password</dt>
+                    <dd class="flex mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0">
                       <% if (req.session.password) { %>
-                      <a href="../security" class="rounded-md bg-stone-800 px-3 py-2 text-sm font-semibold text-stone-200 shadow-sm hover:bg-stone-700">Hide</a>
+                      <span class="flex-grow"><%= req.session.password %></span>
                       <% } else { %>
-                      <a href="../regen" class="rounded-md bg-stone-800 px-3 py-2 text-sm font-semibold text-stone-200 shadow-sm hover:bg-stone-700">Show</a>
+                      <span class="flex-grow">••••••••</span>
                       <% } %>
-                    </span>
-                  </dd>
-                </div>
-              </dl>
+                      <span class="flex-shrink-0 ml-4">
+                        <% if (req.session.password) { %>
+                        <a href="../security" class="px-3 py-2 text-sm font-semibold rounded-md shadow-sm bg-stone-800 text-stone-200 hover:bg-stone-700">Hide</a>
+                        <% } else { %>
+                        <a href="../regen" class="px-3 py-2 text-sm font-semibold rounded-md shadow-sm bg-stone-800 text-stone-200 hover:bg-stone-700">Show</a>
+                        <% } %>
+                      </span>
+                    </dd>
+                  </div>
+                </dl>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+        <%- include('../components/footer') %>
+            
     </main>
-    <%- include('../components/footer') %>
-  </div>
-</div>
+</body>

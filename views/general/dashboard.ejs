@@ -25,6 +25,34 @@
             </div>
         </div>     
     </div>
+    <% if (req.query.err === "CANNOTAFFORDRENEWAL") { %>
+      <div class="flex items-center justify-between p-4 mt-4 mb-4 text-red-400 border bg-red-500/10 border-red-500/20 rounded-xl">
+          <span>You need at least <%= settings.renewals.cost %> coins to purchase a server renewal!</span>
+          <button @click="showError = false" class="text-red-400 hover:text-red-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 6L6 18M6 6l12 12"></path>
+              </svg>
+          </button>
+      </div>
+      <% }if (req.query.err == 'DELETED') { %>
+        <div class="flex items-center justify-between p-4 mt-4 mb-4 text-green-400 border bg-green-500/10 border-green-500/20 rounded-xl">
+        <span>Success! Your server has been deleted, feel free to create a new one now!</span>
+            <button @click="showError = false" class="text-green-400 hover:text-green-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+    </div>
+  <% }if (req.query.success === 'RENEWED') { %>
+      <div class="flex items-center justify-between p-4 mt-4 mb-4 text-green-400 border bg-green-500/10 border-green-500/20 rounded-xl">
+      <span>Succesfully purchased renewal for server!</span>
+      <button @click="showError = false" class="text-green-400 hover:text-green-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+      </button>
+</div>
+<% } %>
             
             <% if (!settings.announcements) { %>
             <div class="w-full mt-2 bg-[262626] text-white rounded-md px-4 py-2 shadow-lg border-[171717] border-2 mb-5 prose max-w-none [&amp;>*]:text-white [&amp;>*>*]:text-white [&amp;>*>*>*]:text-white">
@@ -68,6 +96,7 @@
                     return "bg-red-500"; // Red for 75%-100%
                   };
                 %>
+                
               
                 <!-- Servers -->
                 <div class="p-4 shadow-2xl transition bg-[262626] rounded-2xl hover:scale-95">
@@ -130,20 +159,27 @@
                 </div>
               </div>
               
+              
             <div class="mt-4">
                 <h2 class="mb-2 text-3xl font-bold">Your servers</h2>
                 <% if (pterodactyl.relationships.servers.data.length == 0) { %>
-                 <a href="cp/servers/new"> <div class="flex flex-col items-center w-full gap-1 mt-5 animate-fade"><img src="https://dash.wraithnodes.net/images/empty.svg" class="transition hover:scale-95 w-52" alt="Error"> <h1 class="text-lg text-white">You don't have any servers yet.</h1> <button class="px-5 py-2 mt-5 text-white transition rounded-md shadow-md decoration bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-105">Create a server</button></div></a>
+                 <a href="cp/servers/new"> 
+                  <div class="flex flex-col items-center w-full gap-1 mt-5 animate-fade">
+                    <img src="/assets/empty.svg" class="transition hover:scale-95 w-52" alt="Error"> 
+                    <h1 class="text-lg text-white">You don't have any servers yet.</h1> 
+                    <button class="px-5 py-2 mt-5 text-white transition rounded-md shadow-md decoration bg-gradient-to-r from-blue-500 to-blue-700 hover:scale-105">Create a server</button>
+                  </div>
+                </a>
                 <% } %>
                 <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                  <div class="flex flex-row flex-wrap w-full gap-4 animate-fade">
-                    <div class="flex flex-col shadow-md rounded-2xl decoration bg-slate-800 w-96 h-62">
-                        <div class="relative w-full h-24 bg-center bg-no-repeat bg-cover rounded-b-none rounded-2xl" 
+                  <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade">
+                    <div class="flex flex-col shadow-md rounded-2xl decoration bg-slate-800 w-96">
+                        <div class="relative w-full h-24 bg-center bg-no-repeat bg-cover rounded-t-2xl" 
                              style="background-image: url('https://s3.xshadow.xyz/shadowsdash/assets/events/christmas/advent/2.webp');">
                             <div class="relative w-full h-full p-5 bg-gradient-to-t from-slate-800 to-transparent">
                                 <div class="absolute flex gap-1 top-3 right-3">
                                   <% if (settings.renewals.status) { %>
-                                    <div id="renew-status-btn-<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex gap-1 items-center p-1 rounded-full text-sm backdrop-blur-sm bg-white/10 border-white/20 text-white border-[1px]">
+                                    <div id="renew-status-btn-<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-1 p-1 rounded-full text-sm backdrop-blur-sm bg-white/10 border-white/20 text-white border-[1px]">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256">
                                             <path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"></path>
                                         </svg>
@@ -152,7 +188,7 @@
                                     <script>
                                       async function fetchRenewalStatus(serverId) {
                                           try {
-                                              const response = await fetch(`/renewalstatus?id=${serverId}`);
+                                              const response = await fetch(`/api/renewalstatus?id=${serverId}`);
                                               const data = await response.json();
                                               const renewButton = document.getElementById(`renew-status-btn-${serverId}`);
                               
@@ -274,19 +310,19 @@
                                             Renew
                                         </button></a>
                                     </div>
-                                    <a href="/cp/servers/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black">
+                                    <a href="/edit?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
                                             <path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path>
                                         </svg>
                                         Edit
                                     </a>
-                                    <a class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black" href="https://gp.wraithnodes.net/server/44bf29f8" target="_blank" rel="noreferrer">
+                                    <a class="flex items-center gap-2 px-2 py-1 text-sm transition rounded-full bg-white/20 hover:shadow-white/20 hover:shadow hover:bg-white hover:text-black" href="<%= settings.pterodactyl.domain %>/server/<%= pterodactyl.relationships.servers.data[i].attributes.uuid %>" target="_blank" rel="noreferrer">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256">
                                             <path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path>
                                         </svg>
                                         Open
                                     </a>
-                                    <a href="/cp/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm text-red-500 transition rounded-full bg-red-500/20 hover:shadow-red-500/20 hover:shadow hover:bg-red-500 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg> Delete</a></div> </div></div></div></div>
+                                    <a href="/delete?id=<%= pterodactyl.relationships.servers.data[i].attributes.id %>" class="flex items-center gap-2 px-2 py-1 text-sm text-red-500 transition rounded-full bg-red-500/20 hover:shadow-red-500/20 hover:shadow hover:bg-red-500 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg> Delete</a></div> </div></div></div></div>
                 <% } %>
 
                 

@@ -1,0 +1,96 @@
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title><%= settings.name %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  </head>
+  <body class="text-white bg-[171717]">
+    <div class="flex">
+        <!-- Sidebar -->
+        <%- include('../components/navigation') %>
+        <!-- Main Content -->
+        <main class="container flex-grow px-4 py-8 mx-auto">
+          <div class="flex items-center justify-between w-full pb-4 mx-auto">
+            <!-- Welcome text and subtext on the left -->
+            <div class="flex flex-col">
+                <h1 class="text-xl font-semibold mb-0.5" style="font-family: 'Cabin';">AFK Page</h1>
+                <p class="text-gray-400 text-md">Earn free rewards for keeping this page open.</p>
+            </div>
+    
+            <!-- Breadcrumbs on the right -->
+            <nav aria-label="Breadcrumb" class="inline-flex px-4 py-2 transition-colors duration-200 rounded-xl bg-white/5">
+                <ol role="list" class="flex items-center space-x-2">
+                    <li>
+                        <a href="/dashboard" class="flex items-center gap-2 text-sm transition-colors duration-200 text-zinc-400 hover:text-zinc-200" aria-current="false">
+                            <svg
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="icon icon-tabler size-4 icons-tabler-outline icon-tabler-home"
+                            >
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                                <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                                <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
+                            </svg>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="flex items-center">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right size-4 text-zinc-400"
+                        >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M9 6l6 6l-6 6"></path>
+                        </svg>
+                    </li>
+                    <li>
+                        <a href="#_" class="flex items-center gap-2 text-sm font-medium transition-colors duration-200 text-white/80 hover:text-white" aria-current="page">
+                            AFK Page
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    
+        <!-- AFK Page Content -->
+        <div class="flex justify-center mt-24">
+            <div class="text-center">
+                <div class="border-t border-white/5">
+                <p class="mt-16 mb-3 text-sm tracking-widest text-gray-500 uppercase">WHY NOT COMPLETE LINKVERTISE LINKS WHILE YOU AFK?</p>
+                    <p class="text-2xl font-bold text-white"><span id="usedToday"></span>Linkvertise</p>
+                    <p class="mt-2 text-sm text-gray-300">For every Linkvertise link you complete, you will get <%= settings.linkvertise.coins %> <%= settings.coinname %>.</p>
+                    <div class="flex justify-center mt-4">
+                        <a href="./lv/gen" target="_blank" class="relative flex justify-center px-6 py-2 text-sm font-medium text-white transition ease-in-out border border-transparent rounded-full cursor-pointer group bg-sky-600 hover:bg-sky-700 focus:outline-none">
+                            Go to Linkvertise
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+              
+      </main>
+      <script>
+        let afkTime = 0;
+        let afkInterval = setInterval(() => {
+          afkTime++;
+          document.getElementById("afk-time").textContent = `${afkTime}`;
+        }, 1000);
+      
+      </script>
+  </body>

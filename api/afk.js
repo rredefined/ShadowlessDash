@@ -1,21 +1,23 @@
-/**
- * |-| [- |_ | /\ ( ~|~ `/ |_
- *
- * Heliactyl 24.0.0
- *
- * This is for the AFK websocket. It gives the user coins every x seconds.
- * @module afk
-*/
+// Orignal code by betterheliactyl
+// Modified by achul123
 
-const settings = require("../settings.json");
+const fs = require('fs');
 
 let currentlyonpage = {};
 
 module.exports.load = async function(app, db) {
-  app.ws("/" + settings.api.afk.path, async (ws, req) => {
-    let newsettings = JSON.parse(require("fs").readFileSync("./settings.json"));
-    if (!req.session.pterodactyl) return ws.close();
-    if (currentlyonpage[req.session.userinfo.id]) return ws.close();
+
+  app.ws("/earn/ws", async (ws, req) => {
+
+    let newsettings = JSON.parse(fs.readFileSync("./settings.json"));
+
+    if (newsettings.api.afk.enabled !== true || !req.session || !req.session.userinfo) {
+      return ws.close();
+    }
+
+    if (currentlyonpage[req.session.userinfo.id]) {
+      return ws.close();
+    }
 
     currentlyonpage[req.session.userinfo.id] = true;
 
@@ -24,7 +26,9 @@ module.exports.load = async function(app, db) {
         let usercoins = await db.get("coins-" + req.session.userinfo.id);
         usercoins = usercoins ? usercoins : 0;
         usercoins = usercoins + newsettings.api.afk.coins;
-        await db.set("coins-" + req.session.userinfo.id, usercoins);
+        if (usercoins > 999999999999999) return ws.close();
+        await db.set("coins-" + req.session.userinfo.id, usercoins);  
+        ws.send(JSON.stringify({"type":"coin"}))
       }, newsettings.api.afk.every * 1000
     );
 
@@ -34,4 +38,3 @@ module.exports.load = async function(app, db) {
     }
   });
 };
-

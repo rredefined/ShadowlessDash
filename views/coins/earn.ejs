@@ -83,7 +83,7 @@
                 let totalCoins = 0;
               
                 function connect() {
-                  const socket = new WebSocket(`${window.location.href.startsWith("https://") ? "wss" : "ws"}://${window.location.host}/transfer/ws`);
+                  const socket = new WebSocket(`${window.location.href.startsWith("https://") ? "wss" : "ws"}://${window.location.host}/earn/ws`);
               
                   socket.onopen = () => {
                     console.log("WebSocket connection opened");
@@ -125,7 +125,7 @@
                   <p class="text-2xl font-bold text-white"><span id="usedToday"></span>Linkvertise</p>
                   <p class="mt-2 text-sm text-gray-300">For every Linkvertise link you complete, you will get <%= settings.linkvertise.coins %> <%= settings.coinname %>.</p>
                   <div class="flex justify-center mt-4">
-                      <a href="./lv" target="_blank" class="cursor-pointer transition ease-in-out group relative flex justify-center rounded-full border border-transparent py-2 px-6 text-sm font-medium text-white bg-<%= settings.primarycolor %>-600 hover:bg-<%= settings.primarycolor %>-700 focus:outline-none">
+                      <a href="./lv" target="_blank" class="relative flex justify-center px-6 py-2 text-sm font-medium text-white transition ease-in-out border border-transparent rounded-full cursor-pointer group bg-sky-600 hover:bg-sky-700 focus:outline-none">
                           Go to Linkvertise
                       </a>
                   </div>

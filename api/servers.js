@@ -292,7 +292,9 @@ module.exports.load = async function (app, db) {
               "created server",
               `${req.session.userinfo.username}#${req.session.userinfo.discriminator} created a new server named \`${name}\` with the following specs:\n\`\`\`Memory: ${ram} MB\nCPU: ${cpu}%\nDisk: ${disk}\`\`\``
             );
-            return res.redirect("/servers?err=CREATED");
+            await db.set(`lastrenewal-${serverinfotext.attributes.id}`, Date.now())
+            await db.set(`createdserver-${req.session.userinfo.id}`, true)
+            return res.redirect("/dashboard?err=CREATED");
           } else {
             cb();
             res.redirect(`${redirectlink}?err=NOTANUMBER`);
@@ -504,7 +506,7 @@ module.exports.load = async function (app, db) {
           pterorelationshipsserverdata;
         let theme = indexjs.get(req);
         adminjs.suspend(req.session.userinfo.id);
-        res.redirect("/servers?err=MODIFIED");
+        res.redirect("/dashboard?err=MODIFIED");
       } else {
         res.redirect(`${redirectlink}?id=${req.query.id}&err=MISSINGVARIABLE`);
       }
@@ -559,7 +561,7 @@ module.exports.load = async function (app, db) {
 
       adminjs.suspend(req.session.userinfo.id);
 
-      return res.redirect("/servers?err=DELETED");
+      return res.redirect("/dashboard?err=DELETED");
     } else {
       res.redirect(
         theme.settings.redirect.deleteserverdisabled

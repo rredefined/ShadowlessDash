@@ -1,52 +1,20 @@
+
 <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
   <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
-
-<body class="min-h-full bg-stone-950" style="font-family: 'Inter', sans-serif;">
-  <%- include('../components/navigation') %>
-  <div class="md:pl-64">
-    <main class="min-h-screen">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="px-4 py-8 sm:px-0">
-          <div class="rounded-lg bg-stone-900 p-6 shadow">
-            <div class="px-4 sm:px-0">
-              <h3 class="text-base font-semibold leading-7 text-stone-200">Profile Information</h3>
-              <p class="mt-1 text-sm leading-6 text-stone-400">Update your account settings and profile information.</p>
-            </div>
-            <div class="mt-6 border-t border-stone-800">
-              <dl class="divide-y divide-stone-800">
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Username</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.username %></dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Email address</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.email %></dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Role</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.role %></dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt class="text-sm font-medium leading-6 text-stone-300">Last login</dt>
-                  <dd class="mt-1 text-sm leading-6 text-stone-400 sm:col-span-2 sm:mt-0"><%= userinfo.last_login %></dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-      </div>
+<body class="text-white bg-[171717]">
+  <div class="flex">
+      <!-- Sidebar -->
+      <%- include('../components/navigation') %>
+      <!-- Main Content -->
+      <main class="container flex-grow px-4 py-8 mx-auto">
+        <div class="w-full h-screen p-10 text-white" bis_skin_checked="1"><h1 class="mb-2 text-3xl font-bold">Control panel credentials</h1>   <p class="mt-2 mb-10 text-gray-400">On this page you can find credentials you can use to access your hosted services.</p> <div class="flex flex-col w-full gap-5" bis_skin_checked="1"><div class="flex flex-col gap-5 p-5 rounded-2xl bg-[262626]" bis_skin_checked="1"><div class="flex items-center gap-2" bis_skin_checked="1"><img src="https://deploy.creepercloud.io/images/logos/pterodactyl.svg" class="w-8 h-8" alt=""> <p class="text-xl font-bold">Manage your game servers</p></div> <p>Use the following credentials to login to Pterodactyl™.</p> <div class="flex flex-col" bis_skin_checked="1"><div class="flex items-center gap-2" bis_skin_checked="1"><p class="font-bold text-md">Email:</p> <code class="text-md"><%= pterodactyl.email %></code></div> <div class="flex items-center gap-2" bis_skin_checked="1"><p class="font-bold text-md">Password:</p> <p>Forgot it or never generated it? Reset it!</p></div></div> <div class="flex items-center gap-3" bis_skin_checked="1"><button class="flex flex-row items-center w-full gap-1 p-2 transition bg-red-500 rounded-md decoration sm:w-auto hover:bg-red-400"><i class="text-lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M225,80.4,183.6,39a24,24,0,0,0-33.94,0L31,157.66a24,24,0,0,0,0,33.94l30.06,30.06A8,8,0,0,0,66.74,224H216a8,8,0,0,0,0-16h-84.7L225,114.34A24,24,0,0,0,225,80.4ZM108.68,208H70.05L42.33,180.28a8,8,0,0,1,0-11.31L96,115.31,148.69,168Zm105-105L160,156.69,107.31,104,161,50.34a8,8,0,0,1,11.32,0l41.38,41.38a8,8,0,0,1,0,11.31Z"></path></svg></i> <p class="text-md"><a href="/security">Reset password</a></p></button> <a class="flex flex-row items-center w-full gap-1 p-2 transition bg-blue-500 rounded-md decoration sm:w-auto hover:bg-blue-400" href="<%= settings.pterodactyl.domain %>" target="_blank" rel="noreferrer"><i class="text-lg"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"></rect><path d="M200,64V168a8,8,0,0,1-16,0V83.31L69.66,197.66a8,8,0,0,1-11.32-11.32L172.69,72H88a8,8,0,0,1,0-16H192A8,8,0,0,1,200,64Z"></path></svg></i> <p class="text-md">Open game panel</p></a></div></div> </div> <div class="mt-5" bis_skin_checked="1"><div class="p-5" bis_skin_checked="1"> </div> <div class="flex flex-col gap-1 mb-2" bis_skin_checked="1"><div class="flex flex-row flex-wrap items-center justify-center w-full gap-1 text-sm text-white/50" bis_skin_checked="1"><p class="text-center">
+          <%- include('../components/footer') %>
+            
     </main>
-    <%- include('../components/footer') %>
-  </div>
-
-</div>
+    
 </body>

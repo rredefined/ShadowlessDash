@@ -137,14 +137,10 @@
                     <p class="mb-4 text-gray-400">Upgrade your server's memory</p>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-lg font-medium"><%= settings.api.client.coins.store.ram.cost %> <%= settings.api.client.coins.name %> / GB</span>
-                        <div class="flex items-center">
-                            <button @click="decrementRAM()" class="px-2 py-1 text-white rounded-l bg-white/5">-</button>
-                            <input x-model.number="ram" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                            <button @click="incrementRAM()" class="px-2 py-1 text-white rounded-r bg-white/5">+</button>
-                        </div>
+                        
                     </div>
-                    <button @click="buyRAM()" class="w-full bg-<%= settings.primarycolor %>-600 font-medium text-white py-2 rounded-full hover:bg-<%= settings.primarycolor %>-700 transition">
-                        Buy RAM
+                    <button class="w-full py-2 font-medium text-white transition rounded-full bg-sky-600 hover:bg-sky-700">
+                        <a href="/buy?type=ram&amount=1">Buy RAM</a>
                     </button>
                 </div>
     
@@ -154,14 +150,10 @@
                     <p class="mb-4 text-gray-400">Expand your storage capacity</p>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-lg font-medium"><%= settings.api.client.coins.store.cpu.cost %> <%= settings.api.client.coins.name %> / 5GB</span>
-                        <div class="flex items-center">
-                            <button @click="decrementDisk()" class="px-2 py-1 text-white rounded-l bg-white/5">-</button>
-                            <input x-model.number="disk" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                            <button @click="incrementDisk()" class="px-2 py-1 text-white rounded-r bg-white/5">+</button>
-                        </div>
+                        
                     </div>
-                    <button @click="buyDisk()" class="w-full bg-<%= settings.primarycolor %>-600 font-medium text-white py-2 rounded-full hover:bg-<%= settings.primarycolor %>-700 transition">
-                        Buy Disk
+                    <button class="w-full py-2 font-medium text-white transition rounded-full bg-sky-600 hover:bg-sky-700">
+                        <a href="/buy?type=disk&amount=5">Buy Disk</a>
                     </button>
                 </div>
     
@@ -171,14 +163,10 @@
                     <p class="mb-4 text-gray-400">Boost your processing power</p>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-lg font-medium"><%= settings.api.client.coins.store.cpu.cost %> <%= settings.api.client.coins.name %> / Core</span>
-                        <div class="flex items-center">
-                            <button @click="decrementCPU()" class="px-2 py-1 text-white rounded-l bg-white/5">-</button>
-                            <input x-model.number="cpu" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                            <button @click="incrementCPU()" class="px-2 py-1 text-white rounded-r bg-white/5">+</button>
-                        </div>
+                        
                     </div>
-                    <button @click="buyCPU()" class="w-full bg-<%= settings.primarycolor %>-600 font-medium text-white py-2 rounded-full hover:bg-<%= settings.primarycolor %>-700 transition">
-                        Buy CPU
+                    <button  class="w-full py-2 font-medium text-white transition rounded-full bg-sky-600 hover:bg-sky-700">
+                        <a href="/buy?type=cpu&amount=1">Buy CPU</a>
                     </button>
                 </div>
     
@@ -188,61 +176,45 @@
                     <p class="mb-4 text-gray-400">Buy server slots</p>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-lg font-medium"><%= settings.api.client.coins.store.servers.cost %> <%= settings.api.client.coins.name %> / Slot</span>
-                        <div class="flex items-center">
-                            <button @click="decrementServer()" class="px-2 py-1 text-white rounded-l bg-white/5">-</button>
-                            <input x-model.number="server" type="number" min="1" class="bg-[#1a1f2a]/50 text-white w-16 text-center px-2 py-1 border-t border-b border-white/5">
-                            <button @click="incrementServer()" class="px-2 py-1 text-white rounded-r bg-white/5">+</button>
-                        </div>
+                        
                     </div>
-                    <button @click="buyServer()" class="w-full bg-<%= settings.primarycolor %>-600 font-medium text-white py-2 rounded-full hover:bg-<%= settings.primarycolor %>-700 transition">
-                        Buy Slots
+                    <button class="w-full py-2 font-medium text-white transition rounded-full bg-sky-600 hover:bg-sky-700">
+                        <a href="/buy?type=server&amount=1">Buy Slots</a>
                     </button>
                 </div>
     
-    
+                <script>
+                    function store() {
+                        return {
+                            ram: 1,
+                            disk: 1,
+                            cpu: 1,
+                            server: 1,
+                            buyRAM() {
+                                if (this.ram > 0) {
+                                    window.location.href = `/buy?type=ram&amount=${this.ram}`;
+                                }
+                            },
+                            buyDisk() {
+                                if (this.disk > 0) {
+                                    window.location.href = `/buydisk?amount=${this.disk * 5}`;
+                                }
+                            },
+                            buyServer() {
+                                if (this.server > 0) {
+                                    window.location.href = `/buyservers?amount=${this.server}`;
+                                }
+                            },
+                            buyCPU() {
+                                if (this.cpu > 0) {
+                                    window.location.href = `/buycpu?amount=${this.cpu}`;
+                                }
+                            }
+                        }
+                    }
+                    </script>
             </div>
         </div>
+        <%- include('../components/footer') %>
     </main>
-    
-    <script>
-    function store() {
-        return {
-            ram: 1,
-            disk: 1,
-            cpu: 1,
-            server: 1,
-            incrementServer() { this.server++ },
-            decrementServer() { if (this.server > 1) this.server-- },
-            incrementRAM() { this.ram++ },
-            decrementRAM() { if (this.ram > 1) this.ram-- },
-            incrementDisk() { this.disk++ },
-            decrementDisk() { if (this.disk > 1) this.disk-- },
-            incrementCPU() { this.cpu++ },
-            decrementCPU() { if (this.cpu > 1) this.cpu-- },
-            buyRAM() {
-                if (this.ram > 0) {
-                    window.location.href = `/buyram?amount=${this.ram}`;
-                }
-            },
-            buyDisk() {
-                if (this.disk > 0) {
-                    window.location.href = `/buydisk?amount=${this.disk * 5}`;
-                }
-            },
-            buyServer() {
-                if (this.server > 0) {
-                    window.location.href = `/buyservers?amount=${this.server}`;
-                }
-            },
-            buyCPU() {
-                if (this.cpu > 0) {
-                    window.location.href = `/buycpu?amount=${this.cpu}`;
-                }
-            }
-        }
-    }
-    </script>
-    
-
-
 </body>
