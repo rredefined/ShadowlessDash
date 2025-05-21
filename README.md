@@ -1,7 +1,7 @@
 
 <hr>
 
-# XaloraClient • The modern client panel for Pterodactyl
+# Shadowless • The modern client panel for Pterodactyl
 
 All features:
 
