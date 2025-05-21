@@ -7,18 +7,20 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="text-white bg-[171717]">
-    <div class="flex">
+    <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar -->
         <%- include('../components/navigation') %>
         <!-- Main Content -->
-        <div class="flex-1 p-6">
+        <div class="flex-1 w-full p-4 md:p-8">
             <div class="flex-1">
-                <main class="container flex-grow px-4 py-8 mx-auto">
+                <main class="container flex-grow w-full max-w-2xl mx-auto px-2 sm:px-4 py-6 md:py-8">
                     <div class="flex items-center justify-between w-full pb-8 mx-auto">
-                <a href="/servers" class="px-4 py-2 text-sm transition rounded-lg bg-white/10 hover:bg-white/15 rounded-br-2xl hover:scale-95 text-white/70">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mb-0.5 inline-flex mr-1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
+                        <a href="/servers" class="px-4 py-2 text-sm transition rounded-lg bg-white/10 hover:bg-white/15 rounded-br-2xl hover:scale-95 text-white/70">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 mb-0.5 inline-flex mr-1.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                            Back to server list
+                        </a>
                 Back to server list
                 </a>
                     </div>
