@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-white text-black dark:bg-black dark:text-white">
+<head>
+  <style>
+    /* Premium Styles */
+    
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .glass {
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.13);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .premium-shadow {
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.13), 0 1.5px 8px 0 rgba(0,0,0,0.07);
+    }
+    .logo-grayscale img { filter: grayscale(1) opacity(0.7); transition: filter 0.3s; }
+    .logo-grayscale img:hover { filter: none; }
+    .carousel-item { display: none; }
+    .carousel-item.active { display: block; }
+    .footer-social svg { width: 1.5rem; height: 1.5rem; margin: 0 0.5rem; display: inline-block; vertical-align: middle; }
+    .newsletter-input { background: rgba(255,255,255,0.6); border: none; }
+    .newsletter-input:focus { outline: none; background: #fff; }
+  </style>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shadowless - Minimalist Pterodactyl Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Tailwind Dark Mode Setup
+    tailwind.config = {
+      darkMode: 'media',
+    };
+  </script>
+</head>
+<body class="font-sans antialiased text-gray-900 dark:text-gray-100 transition-all">
+  
+
+  <!-- Hero -->
+  <section class="animate__animated animate__fadeIn min-h-screen flex flex-col items-center justify-center text-center px-6 py-20 animated-bg relative overflow-hidden">
+    <div class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></div>
+    <span class="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-4">Free & Open Source</span>
+    <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-3 py-1 rounded-full mb-4 ml-2 dark:bg-green-900 dark:text-green-200 shadow-sm">Responsive for Any Screen</span>
+    <h1 class="text-5xl text-white md:text-6xl font-bold mb-4 animate-pulse">Shadowless</h1>
+    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-xl">A clean, modern dashboard for Pterodactyl — minimal yet powerful.</p>
+    <a href="#get-started" class="px-6 py-3 bg-black text-white dark:bg-white dark:text-black rounded-2xl hover:opacity-80 transition">Get Started Free</a>
+  </section>
+
+  <!-- Trusted by Logos -->
+  <section class="py-8 bg-white dark:bg-zinc-900">
+    <div class="max-w-5xl mx-auto px-6 text-center">
+      <div class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-4">Trusted by teams</div>
+      <div class="flex flex-wrap justify-center items-center gap-8 logo-grayscale">
+        <img src="https://cdn.discordapp.com/icons/1364176405834760253/db5b265e8c4105341ffce09b6406cde7.webp?size=80&quality=lossless" alt="Zypher" class="rounded-lg h-8">
+        <img src="https://cdn.discordapp.com/icons/1236201112231481456/5a0b26890bdb68e26447b37cd52fe034.webp?size=80&quality=lossless" alt="Infiniti" class="rounded-lg h-8">
+        <img src="https://cdn.discordapp.com/icons/1331603096274604124/dbd78e1c6d117905f77f6044b99c6175.webp?size=80&quality=lossless" alt="Crinx" class="rounded-lg h-8">
+        <img src="https://cdn.discordapp.com/attachments/1351175727067828347/1374780492200804393/1000003530-Photoroom.png?ex=682f4b9b&is=682dfa1b&hm=1726a7d433c3e37005f0e9314b90ef9eff2ea465517a93574b0a381daa433516&" alt="Balloon" class="rounded-lg h-8">
+        <img src="https://cdn.discordapp.com/icons/1298671828138463283/41905afc046d5989aba71837ca72a102.webp?size=80&quality=lossless" alt="EBNodes" class="rounded-lg h-8">
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Demo Section -->
+  <section class="py-16 bg-gradient-to-br from-gray-50 to-gray-200 dark:from-zinc-900 dark:to-zinc-800">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-4">Try the Live Demo</h2>
+      <p class="mb-8 text-gray-600 dark:text-gray-400">Experience Shadowless instantly. No signup required!</p>
+      <a href="#" class="inline-block px-8 py-3 bg-blue-600 text-white rounded-full font-semibold shadow-lg hover:bg-blue-700 transition">Try Live Demo</a>
+      <div class="mt-10 flex justify-center">
+        <img src="https://i.imgur.com/H7Wgr4N.png" alt="Demo Screenshot" class="rounded-xl shadow-xl border dark:border-zinc-700 w-full max-w-xl">
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Grid Features -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl font-semibold text-center mb-12">Features</h2>
+      <div class="overflow-x-auto">
+        <!-- Feature Comparison Table -->
+        <table class="min-w-full mb-16 rou text-sm text-left glass premium-shadow">
+          <thead>
+            <tr class="bg-gray-100 dark:bg-zinc-800">
+              <th class="py-3 px-4 font-semibold">Feature</th>
+              <th class="py-3 px-4">Shadowless</th>
+              <th class="py-3 px-4">Default Panel</th>
+              <th class="py-3 px-4">Other Dashboards</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-2 px-4">Modern UI</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">❌</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+            <tr class="bg-gray-50 dark:bg-zinc-900">
+              <td class="py-2 px-4">Responsive Design</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">⚠️</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Dark Mode</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">❌</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+            <tr class="bg-gray-50 dark:bg-zinc-900">
+              <td class="py-2 px-4">Open Source</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">❌</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Community Support</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">⚠️</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+            <tr class="bg-gray-50 dark:bg-zinc-900">
+              <td class="py-2 px-4">Easy Customization</td><td class="py-2 px-4">✅</td><td class="py-2 px-4">❌</td><td class="py-2 px-4">⚠️</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile UI Showcase Section -->
+  <section class="py-20 bg-gradient-to-br from-blue-50 to-pink-50 dark:from-zinc-900 dark:to-zinc-800 border-t dark:border-zinc-800">
+    <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+      <div class="flex-1 flex justify-center">
+        <div class="rounded-3xl shadow-2xl border-4 border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-2 w-64 h-[520px] flex flex-col items-center relative">
+          <img src="https://i.imgur.com/vG8aDrp.png" alt="Mobile UI Screenshot" class="rounded-xl w-56 h-max object-cover shadow-lg">
+          <div class="fixed left-1/2 -translate-x-1/2 w-16 h-1.5 bg-gray-300 rounded-full"></div>
+        </div>
+      </div>
+      <div class="flex-1 text-center md:text-left">
+        <h2 class="text-2xl font-bold mb-4">Looks Stunning on Mobile</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-6">Shadowless is fully responsive and optimized for all devices. Manage your servers, check analytics, and more—all from your phone.</p>
+        <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+          <li>✔️ Touch-friendly navigation</li>
+          <li>✔️ Fast loading and smooth transitions</li>
+          <li>✔️ Full feature access on mobile</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl animate__animated animate__fadeIn font-semibold text-center mb-12">Powerful Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm">
+          <h3 class="font-semibold mb-2">Per-Resource Splitting</h3>
+          <p class="text-gray-600 dark:text-gray-400">Customize each server's CPU, RAM, and storage limits.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm col-span-2 row-span-2">
+          <h3 class="font-semibold mb-2 text-xl">Responsive UI</h3>
+          <p class="text-gray-600 dark:text-gray-400">Responsive design for all devices.</p>
+          <img src="https://i.imgur.com/NLWin0X.png" alt="Admin Panel" class="mt-4">
+        </div>
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm">
+          <h3 class="font-semibold mb-2">Premium Eggs</h3>
+          <p class="text-gray-600 dark:text-gray-400">Use advanced egg configurations to power unique experiences.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm">
+          <h3 class="font-semibold mb-2">Billing + Plans</h3>
+          <p class="text-gray-600 dark:text-gray-400">Create pricing tiers with ease and integrate your billing system.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm">
+          <h3 class="font-semibold mb-2">Earning System</h3>
+          <p class="text-gray-600 dark:text-gray-400">Let users earn credits through events or rewards.</p>
+        </div>
+        <div class="p-6 bg-white dark:bg-zinc-900 rounded-2xl border dark:border-zinc-700 shadow-sm">
+          <h3 class="font-semibold mb-2">Analytics</h3>
+          <p class="text-gray-600 dark:text-gray-400">View real-time server performance and trends.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section id="get-started" class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-semibold mb-8">How It Works</h2>
+      <ol class="text-left space-y-4 text-gray-700 dark:text-gray-300">
+        <li><strong>1.</strong> Install Pterodactyl Panel on your server.</li>
+        <li><strong>2.</strong> Install the ShadowlessDash from GitHub or fork it.</li>
+        <li><strong>3.</strong> Go through the setup.</li>
+        <li><strong>4.</strong> Configure your settings, eggs, and invite your users!</li>
+      <li><strong>5.</strong> Enjoy your freemium version of shadowless dash</li>
+    </ol>
+    </div>
+  </section>
+
+  <!-- Testimonial with Changing Quotes -->
+  <section class="py-20">
+    <div class="max-w-2xl mx-auto px-6 text-center">
+      <blockquote id="quoteText" class="text-xl font-medium italic text-gray-800 dark:text-gray-200 mb-4">
+        “This dashboard finally makes Pterodactyl fly even more. It’s clean, intuitive, and beautiful.”
+      </blockquote>
+      <cite id="quoteAuthor" class="text-gray-500 dark:text-gray-400 text-sm">— @craterx, CEO@LunarHosting</cite>
+      
+    </div>
+  </section>
+
+  <!-- Why Choose Shadowless Section -->
+  <section class="py-20 border-t dark:border-zinc-800">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-2xl font-bold mb-8">Why Choose Shadowless?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+        <div class="flex items-start gap-4">
+          <span class="text-3xl text-blue-600 dark:text-blue-400">⚡</span>
+          <div>
+            <h3 class="font-semibold">Lightning Fast</h3>
+            <p class="text-gray-600 dark:text-gray-400">Optimized for speed, Shadowless loads instantly and runs smoothly on all devices.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="text-3xl text-green-600 dark:text-green-400">🔒</span>
+          <div>
+            <h3 class="font-semibold">Secure by Design</h3>
+            <p class="text-gray-600 dark:text-gray-400">Built with security best practices, keeping your data and users safe.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="text-3xl text-pink-600 dark:text-pink-400">🎨</span>
+          <div>
+            <h3 class="font-semibold">Beautiful & Modern</h3>
+            <p class="text-gray-600 dark:text-gray-400">Premium design, glassmorphism, and dark mode for a truly modern experience.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="text-3xl text-purple-600 dark:text-purple-400">🌎</span>
+          <div>
+            <h3 class="font-semibold">Global Community</h3>
+            <p class="text-gray-600 dark:text-gray-400">Join a thriving open source community for support, plugins, and more.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Installation Guide -->
+  <section id="installation-guide" class="py-20">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-semibold mb-8">Installation Guide</h2>
+      <ol class="text-left space-y-4 text-gray-700 dark:text-gray-300">
+        <li><strong>1. Requirements:</strong> Node.js, npm, and a running Pterodactyl Panel.</li>
+        <li><strong>2. Download:</strong> <code class="bg-gray-200 dark:bg-zinc-800 px-2 py-1 rounded">git clone https://github.com/XaloraLabs/ShadowlessDash.git</code></li>
+        <li><strong>3. Install Dependencies:</strong> <code class="bg-gray-200 dark:bg-zinc-800 px-2 py-1 rounded">cd ShadowlessDash &amp;&amp; npm install</code></li>
+        <li><strong>4. Configure:</strong> <code class="bg-gray-200 dark:bg-zinc-800 px-2 py-1 rounded">Configure the settings.json</code></li>
+        <li><strong>5. Run:</strong> <code class="bg-gray-200 dark:bg-zinc-800 px-2 py-1 rounded">node index.js</code></li>
+      </ol>
+      <p class="mt-8 text-sm text-gray-500 dark:text-gray-400">See the <a href="https://github.com/XaloraLabs/ShadowlessDash#readme" class="underline hover:text-black dark:hover:text-white">full documentation</a> for advanced configuration and troubleshooting.</p>
+    </div>
+  </section>
+
+  <!-- Changelog/Updates Section -->
+  <section id="changelog" class="py-16 border-t dark:border-zinc-800">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-2xl font-bold mb-6 text-center">Latest Updates</h2>
+      <ul class="space-y-4 text-gray-700 dark:text-gray-300">
+        <li><span class="font-semibold">v1.2.0</span> – Added dark/light mode toggle, improved mobile navigation, and fixed several bugs. <span class="text-xs text-gray-400 ml-2">2025-05-15</span></li>
+        <li><span class="font-semibold">v1.1.0</span> – Introduced live demo and FAQ sections. <span class="text-xs text-gray-400 ml-2">2025-04-30</span></li>
+        <li><span class="font-semibold">v1.0.0</span> – Initial public release! <span class="text-xs text-gray-400 ml-2">2025-04-01</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Team/Contributors Section -->
+  <section class="py-20 border-t dark:border-zinc-800">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-2xl font-bold mb-8">Meet the Team</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass premium-shadow p-6 rounded-xl">
+          <img src="https://cdn.discordapp.com/avatars/786622617871450122/be39be32067808485bcd726d4abfc194.webp?size=128" alt="Lead Dev" class="mx-auto mb-4 rounded-full w-20 h-20 shadow-lg">
+          <h3 class="font-semibold text-lg">ThaYT</h3>
+          <p class="text-gray-500 dark:text-gray-400">Developer</p>
+          <a href="#" class="text-blue-600 dark:text-blue-400 text-xs">@ThaYT</a>
+        </div>
+        <div class="glass premium-shadow p-6 rounded-xl">
+          <img src="https://cdn.discordapp.com/avatars/1243212619825942568/6f03fd119dc4a19a9ec54923a6559d4a.webp?size=240" alt="Designer" class="mx-auto mb-4 rounded-full w-20 h-20 shadow-lg">
+          <h3 class="font-semibold text-lg">Crater</h3>
+          <p class="text-gray-500 dark:text-gray-400">Developer</p>
+          <a href="#" class="text-blue-600 dark:text-blue-400 text-xs">@Crater</a>
+        </div>
+        <div class="glass premium-shadow p-6 rounded-xl">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvOyFiU5EPKjW6oRWrMiZRt50suS_SZl9MvSe6SDmvEdFTRlIrdQHt3OEDwzxDgyarZMc&usqp=CAU" alt="Community" class="mx-auto mb-4 rounded-full w-20 h-20 shadow-lg">
+          <h3 class="font-semibold text-lg">Pixel</h3>
+          <p class="text-gray-500 dark:text-gray-400">Backend</p>
+          <a href="#" class="text-blue-600 dark:text-blue-400 text-xs">@Pixel404</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Community & Support Section -->
+  <section class="py-16 border-t dark:border-zinc-800">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-2xl font-bold mb-6">Community & Support</h2>
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a href="https://discord.gg/3FfjM5MCM5" target="_blank" class="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-full font-semibold shadow hover:bg-indigo-700 transition"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.369A19.791 19.791 0 0016.885 3.1a.486.486 0 00-.257.048c-.109.051-.188.137-.198.241-.014.147-.026.293-.036.44a16.273 16.273 0 00-4.32 0c-.01-.147-.022-.293-.036-.44-.01-.104-.089-.19-.198-.241a.486.486 0 00-.257-.048c-1.432.362-2.813.92-4.032 1.77-.11.076-.172.207-.155.338.03.23.063.459.1.688a19.821 19.821 0 00-2.922 5.797c-.042.106-.01.226.08.302.09.076.212.085.312.025.486-.298.98-.575 1.479-.83.08-.042.174-.038.25.012.077.05.125.137.123.23a12.646 12.646 0 00-.123 2.14c0 2.23.591 4.39 1.7 6.38.064.116.19.177.316.148 1.172-.27 2.36-.47 3.563-.6.116-.012.228.05.283.156.054.106.027.236-.065.31-.693.54-1.386 1.08-2.08 1.62-.09.07-.12.195-.068.3.052.105.168.158.275.12a18.13 18.13 0 004.763 0c.107.038.223-.015.275-.12.052-.105.022-.23-.068-.3-.694-.54-1.387-1.08-2.08-1.62-.092-.074-.119-.204-.065-.31.055-.106.167-.168.283-.156 1.203.13 2.39.33 3.563.6.126.03.252-.032.316-.148 1.109-1.99 1.7-4.15 1.7-6.38 0-.718-.042-1.436-.123-2.14a.232.232 0 01.123-.23.232.232 0 01.25-.012c.499.255.993.532 1.479.83.1.06.222.051.312-.025.09-.076.122-.196.08-.302a19.821 19.821 0 00-2.922-5.797c.037-.229.07-.458.1-.688a.238.238 0 00-.155-.338z"/></svg>Join Discord</a>
+        <a href="https://github.com/XaloraLabs/ShadowlessDash" target="_blank" class="inline-flex items-center px-6 py-3 bg-gray-900 text-white rounded-full font-semibold shadow hover:bg-gray-800 transition"><svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.262.82-.582 0-.288-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.84 1.238 1.84 1.238 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.304.762-1.605-2.665-.304-5.466-1.332-5.466-5.932 0-1.31.469-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.53 11.53 0 013.003-.404c1.018.005 2.045.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.803 5.625-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.218.699.825.58C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"/></svg>GitHub Repo</a>
+        <a href="https://github.com/XaloraLabs/ShadowlessDash/tree/main" target="_blank" class="inline-flex items-center px-6 py-3 bg-white text-gray-900 dark:bg-zinc-800 dark:text-gray-100 rounded-full font-semibold shadow hover:bg-gray-100 dark:hover:bg-zinc-700 transition"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20h9"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m0 0H3"/></svg>Documentation</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20 border-t dark:border-zinc-800">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-2xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+      <div class="space-y-6">
+        <div>
+          <h3 class="font-semibold">Is Shadowless really free?</h3>
+          <p class="text-gray-600 dark:text-gray-400">Yes! Shadowless is fully open source and free for everyone.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold">Does it work on mobile?</h3>
+          <p class="text-gray-600 dark:text-gray-400">Absolutely. The dashboard is fully responsive and works great on all devices.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold">How do I get support?</h3>
+          <p class="text-gray-600 dark:text-gray-400">Join our Discord or check the documentation for help and community support.</p>
+        </div>
+        <div>
+          <h3 class="font-semibold">Can I contribute?</h3>
+          <p class="text-gray-600 dark:text-gray-400">Yes! We welcome contributions. Fork the repo and submit a pull request on GitHub.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 rounded-t-3xl bg-white dark:bg-zinc-900 text-gray-500 dark:text-gray-400 text-sm border-t dark:border-zinc-800">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div>
+        © 2025 Shadowless Project · Built by the community · Forever Free
+      </div>
+      <div class="footer-social flex gap-2">
+        <a href="https://github.com/XaloraLabs/ShadowlessDash" target="_blank" aria-label="GitHub"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.262.82-.582 0-.288-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.84 1.238 1.84 1.238 1.07 1.834 2.809 1.304 3.495.997.108-.775.418-1.304.762-1.605-2.665-.304-5.466-1.332-5.466-5.932 0-1.31.469-2.381 1.236-3.221-.124-.303-.536-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.53 11.53 0 013.003-.404c1.018.005 2.045.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.655 1.653.243 2.873.12 3.176.77.84 1.235 1.911 1.235 3.221 0 4.61-2.803 5.625-5.475 5.921.43.372.823 1.102.823 2.222 0 1.606-.015 2.898-.015 3.293 0 .322.218.699.825.58C20.565 21.796 24 17.297 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
+        <a href="https://discord.gg/3FfjM5MCM5" target="_blank" aria-label="Discord"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.369A19.791 19.791 0 0016.885 3.1a.486.486 0 00-.257.048c-.109.051-.188.137-.198.241-.014.147-.026.293-.036.44a16.273 16.273 0 00-4.32 0c-.01-.147-.022-.293-.036-.44-.01-.104-.089-.19-.198-.241a.486.486 0 00-.257-.048c-1.432.362-2.813.92-4.032 1.77-.11.076-.172.207-.155.338.03.23.063.459.1.688a19.821 19.821 0 00-2.922 5.797c-.042.106-.01.226.08.302.09.076.212.085.312.025.486-.298.98-.575 1.479-.83.08-.042.174-.038.25.012.077.05.125.137.123.23a12.646 12.646 0 00-.123 2.14c0 2.23.591 4.39 1.7 6.38.064.116.19.177.316.148 1.172-.27 2.36-.47 3.563-.6.116-.012.228.05.283.156.054.106.027.236-.065.31-.693.54-1.386 1.08-2.08 1.62-.09.07-.12.195-.068.3.052.105.168.158.275.12a18.13 18.13 0 004.763 0c.107.038.223-.015.275-.12.052-.105.022-.23-.068-.3-.694-.54-1.387-1.08-2.08-1.62-.092-.074-.119-.204-.065-.31.055-.106.167-.168.283-.156 1.203.13 2.39.33 3.563.6.126.03.252-.032.316-.148 1.109-1.99 1.7-4.15 1.7-6.38 0-.718-.042-1.436-.123-2.14a.232.232 0 01.123-.23.232.232 0 01.25-.012c.499.255.993.532 1.479.83.1.06.222.051.312-.025.09-.076.122-.196.08-.302a19.821 19.821 0 00-2.922-5.797c.037-.229.07-.458.1-.688a.238.238 0 00-.155-.338z"/></svg></a>
+        <a href="#changelog" class="hover:underline mr-4">Changelog</a>
+        <a href="#installation-guide" class="hover:underline">Install Guide</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Quotes for the testimonial section
+    const quotes = [
+      {
+        text: "This dashboard finally makes Pterodactyl fly even more. It’s clean, intuitive, and beautiful.",
+        author: "— @Crater"
+      },
+      {
+        text: "Shadowless is the easiest way to modernize your server panel. Setup took minutes!",
+        author: "— @itzVandine"
+      },
+      {
+        text: "Shadowless is the easiest way to modernize your server panel. Setup took minutes!",
+        author: "— @itzVandine"
+      },
+      {
+        text: "My users love the new interface. Support tickets dropped overnight.",
+        author: "— @Flamy"
+      },
+      {
+        text: "Not just an experience — the experience you've never imagined.",
+        author: "— @Xerin"
+      }
+    ];
+    let currentQuote = 0;
+    function showQuote(idx) {
+      document.getElementById('quoteText').textContent = '“' + quotes[idx].text + '”';
+      document.getElementById('quoteAuthor').textContent = quotes[idx].author;
+    }
+    function nextQuote() {
+      currentQuote = (currentQuote + 1) % quotes.length;
+      showQuote(currentQuote);
+    }
+    // Auto-rotate quotes every 5 seconds
+    setInterval(() => {
+      nextQuote();
+    }, 5000);
+    // Show initial quote
+    showQuote(currentQuote);
+
+    // Dark/Light Mode Toggle
+    function toggleMode() {
+      const html = document.documentElement;
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    }
+    // On load, respect saved theme
+    (function() {
+      const saved = localStorage.getItem('theme');
+      if (saved === 'dark') document.documentElement.classList.add('dark');
+      else if (saved === 'light') document.documentElement.classList.remove('dark');
+    })();
+
+    // Performance Metrics Animated Counters
+    function animateCounter(id, target, duration) {
+      const el = document.getElementById(id);
+      let start = 0;
+      const increment = Math.ceil(target / (duration / 16));
+      function update() {
+        start += increment;
+        if ((increment > 0 && start >= target) || (increment < 0 && start <= target)) {
+          el.textContent = target;
+        } else {
+          el.textContent = start;
+          requestAnimationFrame(update);
+        }
+      }
+      update();
+    }
+    window.addEventListener('DOMContentLoaded', () => {
+      animateCounter('counter1', 1250, 1200);
+      animateCounter('counter2', 480, 1200);
+      animateCounter('counter3', 42, 1200);
+    });
+  </script>
+</body>
+</html>
