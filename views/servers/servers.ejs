@@ -163,14 +163,6 @@ font-family: 'JetBrains Mono' !important;
          cpu = cpu + (typeof pterodactyl.relationships.servers.data[i].attributes.limits.cpu == "number" ? pterodactyl.relationships.servers.data[i].attributes.limits.cpu : 0);
      }
      %>
-<!-- Navigation -->
-<%- include('../components/navigation') %>
-
-
-<div class="md:pl-64">
-    <main class="min-h-screen">
-      <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div class="px-4 py-8 sm:px-0">
           <% if ((packages ? packages.ram : 0)/1024 + extraresources.ram/1024 - ram/1024 > 0) { %>
           <form action="/create" method="POST" class="mt-8 space-y-8 divide-y divide-stone-800">
             <div class="space-y-8 divide-y divide-stone-800">

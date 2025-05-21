@@ -7,11 +7,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="text-white bg-[171717]">
-    <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Sidebar -->
-        <%- include('../components/navigation') %>
-        <!-- Main Content -->
-        <div class="flex-1 p-4 md:p-6 w-full">
+  <div class="flex flex-col md:flex-row min-h-screen w-full">
+      <!-- Sidebar -->
+      <%- include('../components/navigation') %>
+      <!-- Main Content -->
+      <main class="flex-1 container px-4 py-8 mx-auto w-full">
             <div class="flex-1">
               <div class="flex flex-row flex-wrap items-center justify-center h-64 pt-12 bg-center bg-no-repeat bg-cover rounded-3xl md:rounded-none h-max xl:justify-between lg:h-52 xl:h-64 lg:pt-5 2xl:pt-0" style="border-radius: 25px; background-image: url(/assets/bgimage.png);">
                 <div class="flex flex-row flex-wrap items-center justify-between w-full h-full md:bg-gradient-to-t md:from-slate-900 to-transparent xl:flex-nowrap"><div class="flex flex-col justify-center w-full mb-5 text-center text-white xl:w-max xl:pl-10 xl:text-start lg:mb-0">
@@ -173,8 +173,9 @@
                 </a>
                 <% } %>
                 <% for (let i = 0, len = pterodactyl.relationships.servers.data.length; i < len; i++) { %>
-                  <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade">
-                    <div class="flex flex-col shadow-md rounded-2xl decoration bg-slate-800 w-96">
+                  <div class="overflow-x-auto w-full">
+                    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 lg:grid-cols-3 animate-fade">
+                      <div class="flex flex-col shadow-md rounded-2xl decoration bg-slate-800 w-full max-w-md mx-auto">
                         <div class="relative w-full h-24 bg-center bg-no-repeat bg-cover rounded-t-2xl" 
                              style="background-image: url('https://s3.xshadow.xyz/shadowsdash/assets/events/christmas/advent/2.webp');">
                             <div class="relative w-full h-full p-5 bg-gradient-to-t from-slate-800 to-transparent">

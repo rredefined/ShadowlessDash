@@ -7,11 +7,11 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="text-white bg-[171717]">
-  <div class="flex">
+  <div class="flex flex-col md:flex-row min-h-screen w-full">
       <!-- Sidebar -->
       <%- include('../components/navigation') %>
       <!-- Main Content -->
-      <main class="container flex-grow px-4 py-8 mx-auto">
+      <main class="flex-1 container px-4 py-8 mx-auto w-full">
         <div class="grid grid-cols-1 gap-4 mt-4 ml-5 sm:grid-cols-2 lg:grid-cols-3">
           <div class="overflow-hidden transition-shadow duration-300 shadow-none bg-white/5 rounded-2xl hover:shadow-lg">
             <div class="p-6">

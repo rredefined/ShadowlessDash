@@ -7,11 +7,11 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="text-white bg-[171717]">
-  <div class="flex">
+  <div class="flex flex-col md:flex-row min-h-screen w-full">
       <!-- Sidebar -->
       <%- include('../components/navigation') %>
       <!-- Main Content -->
-      <main class="container flex-grow px-4 py-8 mx-auto">
+      <main class="flex-1 container px-4 py-8 mx-auto w-full">
         <div class="flex flex-col flex-1 h-screen md:pl-48">
             <div class="py-6">
               <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
