@@ -71,9 +71,9 @@
             </div>
           </div>
 
-          <div class="hidden lg:block lg:w-[20%] ml-[5%]">
-            <img src="../assets/island.png" loading="lazy" class="max-h-[300px] w-full h-auto floating" alt="Floating Island">
-          </div>
+          <div class="hidden lg:block lg:w-[20%] ml-[-2%] relative">
+  <img src="../assets/island.png" loading="lazy" class="floating-island left-float" alt="Floating Island">
+</div>
         </div>
 
         <%- include('./components/footer') %>
@@ -83,12 +83,35 @@
 
     <div id="veepn-breach-alert"></div>
     <style>
+      html, body {
+        overflow-x: hidden;
+      }
       @font-face {
         font-family: FigtreeVF;
         src: url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),
              url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");
         font-weight: 100 1000;
         font-display: swap;
+      }
+      /* Floating Island Animation and Aspect Ratio Fix */
+      .floating-island {
+        display: block;
+        max-height: 300px;
+        width: auto;
+        height: 250px;
+        margin: 0 0 0 -30px;
+        border-radius: 1rem;
+        animation: floatIsland 4s ease-in-out infinite;
+        background: transparent;
+      }
+      .left-float {
+        position: relative;
+        left: -30px;
+      }
+      @keyframes floatIsland {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-30px); }
+        100% { transform: translateY(0px); }
       }
     </style>
   </body>
