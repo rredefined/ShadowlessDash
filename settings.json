@@ -1,9 +1,9 @@
 {
-  "name": "Xalora",
-  "logo": "https://avatars.githubusercontent.com/u/188295803?s=400&v=4",
+  "name": "SkNode",
+  "logo": "https://media.discordapp.net/attachments/1415543559901155369/1431540286571679754/unnamed_1.jpg?ex=68fdc949&is=68fc77c9&hm=7535a5f3abefc3d13b48f73da2ec07c0f25fe95b5c2441f55a269bfb2b2c865e&=&format=webp&width=948&height=948",
   "pterodactyl": {
-    "domain": "https://control.your.host",
-    "key": "ptla_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    "domain": "https://panel.sknode.store",
+    "key": "ptla_xIgXkGRjTSdQnewTXIZCfKoHMuhhuSeydUbCgtbzQ8D"
   },
 
   "announcements": {
@@ -74,9 +74,9 @@
       },
       "oauth2": {
         "_comment": "Go to https://discord.dev/ and create an application to set up OAuth2. This is required for Heliactyl to work. You must also set the redirect URL to the link below.",
-        "id": "",
-        "secret": "",
-        "link": "http://localhost:3001",
+        "id": "1351898717678080060",
+        "secret": "RKsjekFBSGlKpGDe64OAYpDNwyJKtXmy",
+        "link": "https://dash.sknode.store",
         "callbackpath": "/callback",
         "prompt": true,
         "ip": {
